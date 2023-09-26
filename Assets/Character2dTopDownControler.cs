@@ -14,6 +14,7 @@ public class Character2dTopDownControler : MonoBehaviour
 
     public Transform lookAtTarget;
 
+    public WepponManager wepponManager;
     Rigidbody2D rb2D;
 
     // Start is called before the first frame update
@@ -21,12 +22,15 @@ public class Character2dTopDownControler : MonoBehaviour
     {
         rb2D = GetComponent<Rigidbody2D>();
         lookAtTarget.transform.parent = transform.parent;
+        wepponManager = GetComponent<WepponManager>();
 
     }
     private void Update()
     {
         float rotation = Mathf.Atan2((lookAtTarget.position.x - this.transform.position.x), (lookAtTarget.position.y - this.transform.position.y)) * 180 / Mathf.PI * -1;
         this.transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, rotation);
+
+
     }
 
     // Update is called once per frame

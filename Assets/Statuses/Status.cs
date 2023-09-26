@@ -6,12 +6,13 @@ using UnityEngine;
 public abstract class Status
 {
     public enum statusName { Bleed, Insinirate, Poison, Freeze};
-    protected statusName name;
+    public statusName name;
     protected float duration;
     protected float timer;
     protected float tick;
     protected float tickTimer;
     protected Sprite icon;
+    public StatusIconControler statusIcon;
     protected int presision;
     public Status(float duration, float tick,  Sprite icon)
     {
@@ -22,7 +23,19 @@ public abstract class Status
         this.timer = 0;
         this.tickTimer = 0;
     }
-        
+    public Status (Status status)
+    {
+        this.duration = status.duration;
+        this.tick = status.tick;
+        this.icon = status.icon;
+
+        this.timer = 0;
+        this.tickTimer = 0;
+    }
+    public virtual Status copy()
+    {
+        return null;
+    }
     public bool resolveStatus(float deltaTime, HealthStatusManager HSman)
     {
         timer += deltaTime;
@@ -33,7 +46,7 @@ public abstract class Status
                 deltaTime = 0;
         }
         tickTimer += deltaTime;
-        while (tickTimer >= tick || Mathf.Approximately(tickTimer, tick) )
+        while (tickTimer >= tick || Mathf.Approximately(tickTimer, tick) || Mathf.Abs(tick - tickTimer) < 0.0001 * tick)
         {
             tickTimer -= tick;
             //Debug.Log(deltaTime);
@@ -45,6 +58,10 @@ public abstract class Status
         }
         else
             return false;
+    }
+    public void statusIconUpdate()
+    {
+        statusIcon.setFillAmount((duration - timer) / duration);
     }
     public virtual void efect(HealthStatusManager HSman)
     {

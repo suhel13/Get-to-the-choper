@@ -11,6 +11,22 @@ public class Bleed : Status
         this.damage = damage;
         name = statusName.Bleed;
     }
+    public Bleed(Bleed bleed): base(bleed)
+    {
+        damage = bleed.damage;
+        name = statusName.Bleed;
+    }
+
+    public override Status copy()
+    {
+        return new Bleed(this);
+    }
+
+    public Bleed(BleedSO bleedSO) : base(bleedSO.duration, bleedSO.tick, bleedSO.icon)
+    {
+        this.damage = bleedSO.damage;
+        this.name = statusName.Bleed;
+    }
 
     public override void efect(HealthStatusManager HSman)
     {
