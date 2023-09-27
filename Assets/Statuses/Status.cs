@@ -5,7 +5,7 @@ using UnityEngine;
 [Serializable]
 public abstract class Status
 {
-    public enum statusName { Bleed, Insinirate, Poison, Freeze};
+    public enum statusName { Bleed, Insinirate, Poison, Freeze, Wet, Shock };
     public statusName name;
     public int id;
     protected float duration;
@@ -15,12 +15,11 @@ public abstract class Status
     protected Sprite icon;
     public StatusIconControler statusIcon;
     protected int presision;
-    public Status(float duration, float tick,  Sprite icon)
+    public Status(float duration, float tick)
     {
         this.id = GameManager.Instance.nextStatusId();
         this.duration = duration;
         this.tick = tick;
-        this.icon = icon;
 
         this.timer = 0;
         this.tickTimer = 0;
@@ -34,7 +33,6 @@ public abstract class Status
         
         this.duration = status.duration;
         this.tick = status.tick;
-        this.icon = status.icon;
 
         this.timer = 0;
         this.tickTimer = 0;
@@ -45,6 +43,8 @@ public abstract class Status
     }
     public bool resolveStatus(float deltaTime, HealthStatusManager HSman)
     {
+        normalEffect(HSman);
+
         timer += deltaTime;
         if (timer > duration)
         {
@@ -57,7 +57,7 @@ public abstract class Status
         {
             tickTimer -= tick;
             //Debug.Log(deltaTime);
-            efect(HSman);
+            tickEfect(HSman);
         }
         if (timer > duration)
         {
@@ -65,6 +65,10 @@ public abstract class Status
         }
         else
             return false;
+    }
+    public virtual void resolveCominations(Dictionary<int,Status> targetStatuses)
+    {
+
     }
     public void resetDuration()
     {
@@ -74,8 +78,12 @@ public abstract class Status
     {
         statusIcon.setFillAmount((duration - timer) / duration);
     }
-    public virtual void efect(HealthStatusManager HSman)
+    public virtual void normalEffect(HealthStatusManager HSman)
     {
-        Debug.LogWarning("Not implemented Override");
+        Debug.LogWarning("Normal efect not implemented Override");
+    }
+    public virtual void tickEfect(HealthStatusManager HSman)
+    {
+        Debug.LogWarning("Tick efect not implemented Override");
     }
 }

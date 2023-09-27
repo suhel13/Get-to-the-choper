@@ -30,6 +30,10 @@ public class WepponManager : MonoBehaviour
         {
             shoot();
         }
+        else
+        {
+            activeGun.stopedShooting = true;
+        }
         updateGunsTimers(Time.deltaTime);
     }
     public void shoot()

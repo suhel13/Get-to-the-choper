@@ -7,6 +7,10 @@ public class BleedSO : StatusSO
 {
     public float damage;
 
+    private void Reset()
+    {
+        name = Status.statusName.Bleed;
+    }
     public override Status createObject()
     {
         Debug.Log("create Bleed");

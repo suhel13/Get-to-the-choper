@@ -6,7 +6,7 @@ using UnityEngine;
 public class Bleed : Status
 {
     float damage;
-    public Bleed(float duration, float tick, float damage, Sprite icon): base(duration, tick, icon)
+    public Bleed(float duration, float tick, float damage, Sprite icon): base(duration, tick)
     {
         this.damage = damage;
         name = statusName.Bleed;
@@ -22,15 +22,19 @@ public class Bleed : Status
         return new Bleed(this, false);
     }
 
-    public Bleed(BleedSO bleedSO) : base(bleedSO.duration, bleedSO.tick, bleedSO.icon)
+    public Bleed(BleedSO bleedSO) : base(bleedSO.duration, bleedSO.tick)
     {
         this.damage = bleedSO.damage;
         this.name = statusName.Bleed;
     }
-
-    public override void efect(HealthStatusManager HSman)
+    public override void normalEffect(HealthStatusManager HSman)
+    {
+        return;
+    }
+    public override void tickEfect(HealthStatusManager HSman)
     {
         HSman.takeDamage(damage);
         Debug.Log("bleed efect trigeer");
     }
+
 }

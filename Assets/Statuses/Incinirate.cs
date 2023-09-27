@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Incinirate : Status
 {
-    public Incinirate(float duration, float tick, Sprite icon) : base(duration, tick, icon)
+    public Incinirate(float duration, float tick) : base(duration, tick)
     {
         name = statusName.Insinirate;
     }
 
-    public override void efect(HealthStatusManager HSman)
+    public override void tickEfect(HealthStatusManager HSman)
     {
         Debug.Log("Incinirate efect trigeer");
     }

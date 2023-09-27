@@ -29,8 +29,8 @@ public class PersonalUIControler : MonoBehaviour
     {
         StatusIconControler iconControler = Instantiate(statusIconPrefab, transform).GetComponent<StatusIconControler>();
         iconControler.setPosition(firstStatusIcon.GetComponent<RectTransform>().localPosition + statusIconOffset * statusIcons.Count);
-        switch (statusName) 
-        { 
+        switch (statusName)
+        {
             case Status.statusName.Bleed:
                 iconControler.setSprites(GameManager.Instance.iconManager.bleedIcon, GameManager.Instance.iconManager.bleedIconBG);
                 break;
@@ -39,6 +39,14 @@ public class PersonalUIControler : MonoBehaviour
                 break;
             case Status.statusName.Insinirate:
                 iconControler.setSprites(GameManager.Instance.iconManager.incinirateIcon, GameManager.Instance.iconManager.incinirateIconBG);
+                break;
+            case Status.statusName.Poison:
+                break;
+            case Status.statusName.Wet:
+                iconControler.setSprites(GameManager.Instance.iconManager.wetIcon, GameManager.Instance.iconManager.wetIconBG);
+                break;
+            case Status.statusName.Shock:
+                iconControler.setSprites(GameManager.Instance.iconManager.shockIcon, GameManager.Instance.iconManager.shockIconBG);
                 break;
         }
         return iconControler;

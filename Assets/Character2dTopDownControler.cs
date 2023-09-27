@@ -9,6 +9,7 @@ public class Character2dTopDownControler : MonoBehaviour
 {
     [SerializeField] float speed;
     public float speedModifire = 1;
+    public Dictionary<int, float> speedModifires = new Dictionary<int, float>();
     public List<Vector2> enviromentSpeedVector = new List<Vector2>();
     public Vector2 movementVector;
     public Transform lookAtTarget;
@@ -28,18 +29,33 @@ public class Character2dTopDownControler : MonoBehaviour
     {
         float rotation = Mathf.Atan2((lookAtTarget.position.x - this.transform.position.x), (lookAtTarget.position.y - this.transform.position.y)) * 180 / Mathf.PI * -1;
         this.transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, rotation);
+    }
 
-
+    public void addSpeedModifire(int id, float modifire)
+    {
+        if(speedModifires.ContainsKey(id) == false) 
+        {
+            speedModifires.Add(id, modifire);
+        }
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        speedModifire = 1;
+        foreach (KeyValuePair<int, float> entry in speedModifires)
+        {
+            speedModifire += entry.Value;
+        }
+        speedModifires.Clear();
+
         rb2D.velocity = movementVector * speed * speedModifire;
+        
         foreach(Vector2 evnSpeed in enviromentSpeedVector) 
         {
             rb2D.velocity += evnSpeed;
         }
         enviromentSpeedVector.Clear();
+
     }
 }

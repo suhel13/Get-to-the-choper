@@ -7,7 +7,6 @@ public abstract class StatusSO : ScriptableObject
     public Status.statusName name; 
     public float duration;
     public float tick;
-    public Sprite icon;
 
     public virtual Status createObject()
     {

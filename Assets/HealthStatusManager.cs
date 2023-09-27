@@ -4,14 +4,14 @@ using System.Xml;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class HealthStatusManager : MonoBehaviour
 {
     public float Hp;
     public float maxHp;
     public Dictionary<int, Status> Statuses = new Dictionary<int, Status>();
-
-    public Sprite bleedIcon;
+    List<int> statusesToRemove = new List<int>();
     PersonalUIControler personalUIControler;
 
     // Start is called before the first frame update
@@ -23,24 +23,29 @@ public class HealthStatusManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        int i = Statuses.Count;
         foreach (KeyValuePair<int, Status> entry in Statuses)
         {
             // do something with entry.Value or entry.Key
             if (entry.Value.resolveStatus(Time.deltaTime, this))
             {
-                Statuses.Remove(entry.Key);
-
-                Destroy(personalUIControler.statusIcons[i].gameObject);
-                personalUIControler.statusIcons.RemoveAt(i);
-                personalUIControler.updateStatusIconPositions();
+                statusesToRemove.Add(entry.Key);
             }
             else
             {
                 Statuses[entry.Key].statusIconUpdate();
             }
-            i--;
         }
+        foreach (int key in statusesToRemove)
+        {
+
+            Destroy(Statuses[key].statusIcon.gameObject);
+            personalUIControler.statusIcons.Remove(Statuses[key].statusIcon);
+            personalUIControler.updateStatusIconPositions();
+
+            Statuses.Remove(key);
+        }
+
+        statusesToRemove.Clear();
 
         personalUIControler.updateHpSlider(Hp / maxHp);
     }

@@ -11,6 +11,7 @@ public abstract class Gun : MonoBehaviour
     [SerializeField] float relodeTime;
     float relodeTimer;
     bool isReloding;
+    public bool stopedShooting;
     [HideInInspector] public Slider relodeSlider;
 
     [SerializeField] int magSize;
@@ -55,8 +56,9 @@ public abstract class Gun : MonoBehaviour
                 //spawn projectail equal to pelets number
                 spawnBullets(damage, bulletSpeed);
             }
+            stopedShooting = false;
         }
-        else if (isReloding == false)
+        else if (isReloding == false && stopedShooting)
         {
             startRelode();
         }
