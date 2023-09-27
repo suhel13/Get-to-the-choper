@@ -11,7 +11,7 @@ public class Bleed : Status
         this.damage = damage;
         name = statusName.Bleed;
     }
-    public Bleed(Bleed bleed): base(bleed)
+    public Bleed(Bleed bleed, bool newId): base(bleed, newId)
     {
         damage = bleed.damage;
         name = statusName.Bleed;
@@ -19,7 +19,7 @@ public class Bleed : Status
 
     public override Status copy()
     {
-        return new Bleed(this);
+        return new Bleed(this, false);
     }
 
     public Bleed(BleedSO bleedSO) : base(bleedSO.duration, bleedSO.tick, bleedSO.icon)

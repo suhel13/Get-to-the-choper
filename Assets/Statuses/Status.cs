@@ -25,8 +25,13 @@ public abstract class Status
         this.timer = 0;
         this.tickTimer = 0;
     }
-    public Status (Status status)
+    public Status (Status status, bool newID)
     {
+        if(newID)
+            this.id = GameManager.Instance.nextStatusId();
+        else
+            this.id = status.id;
+        
         this.duration = status.duration;
         this.tick = status.tick;
         this.icon = status.icon;
@@ -60,6 +65,10 @@ public abstract class Status
         }
         else
             return false;
+    }
+    public void resetDuration()
+    {
+        timer = 0;
     }
     public void statusIconUpdate()
     {

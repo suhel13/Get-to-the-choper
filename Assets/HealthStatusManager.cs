@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +9,7 @@ public class HealthStatusManager : MonoBehaviour
 {
     public float Hp;
     public float maxHp;
-    public List<Status> Statuses = new List<Status>();
+    public Dictionary<int, Status> Statuses = new Dictionary<int, Status>();
 
     public Sprite bleedIcon;
     PersonalUIControler personalUIControler;
@@ -22,20 +23,25 @@ public class HealthStatusManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for (int i = Statuses.Count - 1; i >= 0; i--)
+        int i = Statuses.Count;
+        foreach (KeyValuePair<int, Status> entry in Statuses)
         {
-            if (Statuses[i].resolveStatus(Time.deltaTime, this))
+            // do something with entry.Value or entry.Key
+            if (entry.Value.resolveStatus(Time.deltaTime, this))
             {
-                Statuses.RemoveAt(i);
+                Statuses.Remove(entry.Key);
+
                 Destroy(personalUIControler.statusIcons[i].gameObject);
                 personalUIControler.statusIcons.RemoveAt(i);
                 personalUIControler.updateStatusIconPositions();
             }
             else
             {
-                Statuses[i].statusIconUpdate();
+                Statuses[entry.Key].statusIconUpdate();
             }
+            i--;
         }
+
         personalUIControler.updateHpSlider(Hp / maxHp);
     }
 
@@ -49,11 +55,19 @@ public class HealthStatusManager : MonoBehaviour
 
     public void addStatus(Status status)
     {
-        Debug.Log(status);
-        Statuses.Add(status);
-        StatusIconControler statusIconControler = personalUIControler.createStatusIcon(status.name);
-        personalUIControler.statusIcons.Add(statusIconControler);
-        status.statusIcon = statusIconControler;
+        Debug.Log(status.id);
+
+        if (Statuses.ContainsKey(status.id))
+        {
+            Statuses[status.id].resetDuration();
+        }
+        else
+        {
+            Statuses.Add(status.id, status);
+            StatusIconControler statusIconControler = personalUIControler.createStatusIcon(status.name);
+            personalUIControler.statusIcons.Add(statusIconControler);
+            status.statusIcon = statusIconControler;
+        }
     }
 
     void death()
