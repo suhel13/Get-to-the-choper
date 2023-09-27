@@ -9,9 +9,8 @@ public class Character2dTopDownControler : MonoBehaviour
 {
     [SerializeField] float speed;
     public float speedModifire = 1;
-    public Vector2 enviromentSpeedVector;
+    public List<Vector2> enviromentSpeedVector = new List<Vector2>();
     public Vector2 movementVector;
-
     public Transform lookAtTarget;
 
     public WepponManager wepponManager;
@@ -36,6 +35,11 @@ public class Character2dTopDownControler : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        rb2D.velocity = movementVector * speed * speedModifire + enviromentSpeedVector;    
+        rb2D.velocity = movementVector * speed * speedModifire;
+        foreach(Vector2 evnSpeed in enviromentSpeedVector) 
+        {
+            rb2D.velocity += evnSpeed;
+        }
+        enviromentSpeedVector.Clear();
     }
 }

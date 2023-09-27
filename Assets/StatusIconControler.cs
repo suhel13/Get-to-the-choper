@@ -8,7 +8,7 @@ public class StatusIconControler : MonoBehaviour
     [SerializeField] Image icon;
     [SerializeField] Image iconBG;
     
-    public void setStartValues(Sprite icon, Sprite iconBG)
+    public void setSprites(Sprite icon, Sprite iconBG)
     {
         this.icon.sprite = icon;
         this.iconBG.sprite = iconBG;

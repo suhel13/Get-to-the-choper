@@ -49,11 +49,11 @@ public class HealthStatusManager : MonoBehaviour
 
     public void addStatus(Status status)
     {
+        Debug.Log(status);
         Statuses.Add(status);
-        StatusIconControler iconControler = Instantiate(personalUIControler.statusIconPrefab, personalUIControler.transform).GetComponent<StatusIconControler>();
-        iconControler.setPosition(personalUIControler.firstStatusIcon.GetComponent<RectTransform>().localPosition + personalUIControler.statusIconOffset * personalUIControler.statusIcons.Count);
-        status.statusIcon = iconControler;
-        personalUIControler.statusIcons.Add(iconControler);
+        StatusIconControler statusIconControler = personalUIControler.createStatusIcon(status.name);
+        personalUIControler.statusIcons.Add(statusIconControler);
+        status.statusIcon = statusIconControler;
     }
 
     void death()

@@ -7,6 +7,7 @@ public abstract class Status
 {
     public enum statusName { Bleed, Insinirate, Poison, Freeze};
     public statusName name;
+    public int id;
     protected float duration;
     protected float timer;
     protected float tick;
@@ -16,6 +17,7 @@ public abstract class Status
     protected int presision;
     public Status(float duration, float tick,  Sprite icon)
     {
+        this.id = GameManager.Instance.nextStatusId();
         this.duration = duration;
         this.tick = tick;
         this.icon = icon;

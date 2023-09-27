@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class IconManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Sprite bleedIcon;
+    public Sprite bleedIconBG;
+    public Sprite incinirateIcon;
+    public Sprite incinirateIconBG;
+    public Sprite frezeIcon;
+    public Sprite frezeIconBG;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
