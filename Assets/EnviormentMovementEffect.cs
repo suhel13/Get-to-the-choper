@@ -12,7 +12,6 @@ public class EnviormentMovementEffect : MonoBehaviour
         Character2dTopDownControler target;
         if (collision.gameObject.TryGetComponent<Character2dTopDownControler>(out target))
         {
-            Debug.Log("collision stay");
             target.enviromentSpeedVector.Add(diretion * speed);
         }
     }

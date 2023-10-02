@@ -12,26 +12,30 @@ public abstract class Status
     protected float timer;
     protected float tick;
     protected float tickTimer;
-    protected Sprite icon;
     public StatusIconControler statusIcon;
     protected int presision;
+
+    protected List<int> statusesToRemove = new List<int>();
     public Status(float duration, float tick)
     {
         this.id = GameManager.Instance.nextStatusId();
         this.duration = duration;
+        if (this.duration <= 0)
+            this.duration = 0.01f;
         this.tick = tick;
-
         this.timer = 0;
         this.tickTimer = 0;
     }
-    public Status (Status status, bool newID)
+    public Status(Status status, bool newID)
     {
-        if(newID)
+        if (newID)
             this.id = GameManager.Instance.nextStatusId();
         else
             this.id = status.id;
-        
+
         this.duration = status.duration;
+        if (this.duration <= 0)
+            this.duration = 0.01f;
         this.tick = status.tick;
 
         this.timer = 0;
@@ -66,7 +70,11 @@ public abstract class Status
         else
             return false;
     }
-    public virtual void resolveCominations(Dictionary<int,Status> targetStatuses)
+    public virtual void resolvePhysicsEfects(HealthStatusManager HSman)
+    {
+
+    }
+    public virtual void resolveCombinations(HealthStatusManager HSman, Dictionary<int, Status> targetStatuses)
     {
 
     }
@@ -80,10 +88,10 @@ public abstract class Status
     }
     public virtual void normalEffect(HealthStatusManager HSman)
     {
-        Debug.LogWarning("Normal efect not implemented Override");
+        return;
     }
     public virtual void tickEfect(HealthStatusManager HSman)
     {
-        Debug.LogWarning("Tick efect not implemented Override");
+        return;
     }
 }

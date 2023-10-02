@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour
             target.takeDamage(damage);
             foreach (Status status in statuses)
             {
-                target.addStatus(status);
+                target.addStatus(status.copy());
             }
             Destroy(this.gameObject);
         }

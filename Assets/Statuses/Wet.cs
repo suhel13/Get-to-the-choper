@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Status;
 
 public class Wet : Status
 {
-    public Wet(float duration, float tick, Sprite icon) : base(duration, tick)
+    public Wet(float duration, float tick) : base(duration, tick)
     {
         name = statusName.Wet;
     }

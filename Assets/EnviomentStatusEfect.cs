@@ -16,6 +16,7 @@ public class EnviomentStatusEfect : MonoBehaviour
             Debug.Log(statSO.name);
             statuses.Add(statSO.createObject());
         }
+        Debug.Log(statuses.Count, this.gameObject);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -25,9 +26,8 @@ public class EnviomentStatusEfect : MonoBehaviour
         {
             foreach (Status status in statuses)
             {
-                target.addStatus(status);
+                target.addStatus(status.copy());
             }
         }
     }
-
 }

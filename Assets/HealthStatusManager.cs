@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Xml;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using static UnityEngine.EventSystems.EventTrigger;
 
@@ -37,17 +38,20 @@ public class HealthStatusManager : MonoBehaviour
         }
         foreach (int key in statusesToRemove)
         {
-
-            Destroy(Statuses[key].statusIcon.gameObject);
-            personalUIControler.statusIcons.Remove(Statuses[key].statusIcon);
-            personalUIControler.updateStatusIconPositions();
-
-            Statuses.Remove(key);
+            removeStatus(key);
         }
 
         statusesToRemove.Clear();
 
         personalUIControler.updateHpSlider(Hp / maxHp);
+    }
+
+    private void FixedUpdate()
+    {
+        foreach (KeyValuePair<int, Status> entry in Statuses)
+        {
+            entry.Value.resolvePhysicsEfects(this);
+        }
     }
 
 
@@ -57,13 +61,23 @@ public class HealthStatusManager : MonoBehaviour
         if (Hp <= 0)
             death();
     }
+    public void removeStatus(int id)
+    {
+        Destroy(Statuses[id].statusIcon.gameObject);
+        personalUIControler.statusIcons.Remove(Statuses[id].statusIcon);
+        personalUIControler.updateStatusIconPositions();
+
+        Statuses.Remove(id);
+    }
 
     public void addStatus(Status status)
     {
-        Debug.Log(status.id);
+        status.resolveCombinations(this, Statuses);
+        Debug.Log(status.id +" name "+ status.name);
 
         if (Statuses.ContainsKey(status.id))
         {
+            Debug.Log(status + "reset " + status.id +" name " + status.name);
             Statuses[status.id].resetDuration();
         }
         else

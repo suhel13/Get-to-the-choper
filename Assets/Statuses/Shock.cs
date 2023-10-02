@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class Shock : Status
 {
     float damage;
     float slow;
-    public Shock(float duration, float tick, float damage, float slow, Sprite icon) : base(duration, tick)
+    public Shock(float duration, float tick, float damage, float slow) : base(duration, tick)
     {
         this.damage = damage;
         this.slow = slow;
@@ -30,7 +31,7 @@ public class Shock : Status
         this.slow = ShockSO.slow;
         this.name = statusName.Shock;
     }
-    public override void normalEffect(HealthStatusManager HSman)
+    public override void resolvePhysicsEfects(HealthStatusManager HSman)
     {
         HSman.GetComponent<Character2dTopDownControler>().addSpeedModifire(id, slow);
     }
@@ -39,9 +40,15 @@ public class Shock : Status
         HSman.takeDamage(damage);
         Debug.Log("Shock efect trigeer");
     }
-    public override void resolveCominations()
+    public override void resolveCombinations(HealthStatusManager HSman, Dictionary<int, Status> targetStatuses)
     {
-        foreach
+        foreach (KeyValuePair<int, Status> entry in targetStatuses)
+        {
+            if(entry.Value.name == Status.statusName.Wet)
+            {
+                Debug.Log("wather plus ligthning");
+            }
+        }
     }
 
 }

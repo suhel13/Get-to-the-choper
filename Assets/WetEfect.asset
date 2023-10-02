@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: 4
   duration: 10
-  tick: 0
+  tick: 10

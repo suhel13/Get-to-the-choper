@@ -16,3 +16,4 @@ MonoBehaviour:
   duration: 10
   tick: 10
   slow: -0.5
+  frozenDuration: 2

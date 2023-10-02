@@ -6,7 +6,7 @@ using UnityEngine;
 public class Bleed : Status
 {
     float damage;
-    public Bleed(float duration, float tick, float damage, Sprite icon): base(duration, tick)
+    public Bleed(float duration, float tick, float damage): base(duration, tick)
     {
         this.damage = damage;
         name = statusName.Bleed;
@@ -34,7 +34,6 @@ public class Bleed : Status
     public override void tickEfect(HealthStatusManager HSman)
     {
         HSman.takeDamage(damage);
-        Debug.Log("bleed efect trigeer");
     }
 
 }
