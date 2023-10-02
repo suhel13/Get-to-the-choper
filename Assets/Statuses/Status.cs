@@ -14,8 +14,10 @@ public abstract class Status
     protected float tickTimer;
     public StatusIconControler statusIcon;
     protected int presision;
-
+    protected bool isStartEfectResolved;
     protected List<int> statusesToRemove = new List<int>();
+
+
     public Status(float duration, float tick)
     {
         this.id = GameManager.Instance.nextStatusId();
@@ -25,6 +27,7 @@ public abstract class Status
         this.tick = tick;
         this.timer = 0;
         this.tickTimer = 0;
+        this.isStartEfectResolved = false;
     }
     public Status(Status status, bool newID)
     {
@@ -40,6 +43,7 @@ public abstract class Status
 
         this.timer = 0;
         this.tickTimer = 0;
+        this.isStartEfectResolved = false;
     }
     public virtual Status copy()
     {
@@ -70,6 +74,10 @@ public abstract class Status
         else
             return false;
     }
+    public virtual void startEfect(HealthStatusManager HSman)
+    {
+
+    }
     public virtual void resolvePhysicsEfects(HealthStatusManager HSman)
     {
 
@@ -78,7 +86,7 @@ public abstract class Status
     {
 
     }
-    public void resetDuration()
+    public virtual void resetStatus()
     {
         timer = 0;
     }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
@@ -7,6 +8,11 @@ public class Shock : Status
 {
     float damage;
     float slow;
+
+    int chainCount;
+    float chainRange;
+    List<HealthStatusManager> pastChainTargets;
+
     public Shock(float duration, float tick, float damage, float slow) : base(duration, tick)
     {
         this.damage = damage;
@@ -17,7 +23,11 @@ public class Shock : Status
     {
         damage = Shock.damage;
         slow = Shock.slow;
+        chainCount = Shock.chainCount;
+        chainRange = Shock.chainRange;
+        pastChainTargets = new List<HealthStatusManager>(Shock.pastChainTargets);
         name = statusName.Shock;
+        Debug.Log(pastChainTargets.Count);
     }
 
     public override Status copy()
@@ -29,8 +39,55 @@ public class Shock : Status
     {
         this.damage = ShockSO.damage;
         this.slow = ShockSO.slow;
+        chainCount = ShockSO.chainCount;
+        chainRange = ShockSO.chainRange;
+        pastChainTargets = new List<HealthStatusManager>();
         this.name = statusName.Shock;
     }
+
+    public override void startEfect(HealthStatusManager HSman)
+    {
+        if (isStartEfectResolved)
+            return;
+        
+        isStartEfectResolved = true;
+        Debug.Log("Shock start effect");
+        if (chainCount > 0)
+        {
+            HealthStatusManager closesTarget = null;
+            float closestTargetRange = chainRange;
+            HealthStatusManager tempHSman;
+            chainCount--;
+            pastChainTargets.Add(HSman);
+            int collisoins=0;
+            int HSmans=0;
+            foreach (var item in Physics2D.OverlapCircleAll(HSman.transform.position, chainRange))
+            {
+                collisoins++;
+                if (item.gameObject.TryGetComponent<HealthStatusManager>(out tempHSman))
+                {
+                    HSmans++;
+                    if (pastChainTargets.Contains(tempHSman) == false)
+                    {
+                        if (Vector2.Distance(item.transform.position, HSman.transform.position) < closestTargetRange)
+                        {
+                            closestTargetRange = Vector2.Distance(item.transform.position, HSman.transform.position);
+                            closesTarget = item.gameObject.GetComponent<HealthStatusManager>();
+                        }
+                    }
+                }
+            }
+            Debug.Log("avilable HSMans/Colisions : " + HSmans + "/ " + collisoins + " past tagrets: " + pastChainTargets.Count);
+
+            if (closesTarget != null)
+            {
+                Debug.Log(closestTargetRange, closesTarget.gameObject);
+                closesTarget.addStatus(this.copy());
+                Debug.DrawLine(HSman.transform.position, closesTarget.transform.position, Color.yellow, 0.2f);
+            }
+        }
+    }
+
     public override void resolvePhysicsEfects(HealthStatusManager HSman)
     {
         HSman.GetComponent<Character2dTopDownControler>().addSpeedModifire(id, slow);
@@ -38,7 +95,6 @@ public class Shock : Status
     public override void tickEfect(HealthStatusManager HSman)
     {
         HSman.takeDamage(damage);
-        Debug.Log("Shock efect trigeer");
     }
     public override void resolveCombinations(HealthStatusManager HSman, Dictionary<int, Status> targetStatuses)
     {
@@ -46,9 +102,17 @@ public class Shock : Status
         {
             if(entry.Value.name == Status.statusName.Wet)
             {
+                chainCount++;
                 Debug.Log("wather plus ligthning");
             }
         }
+        Debug.Log("chainCount: "+ chainCount + " range: " + chainRange);
     }
-
+    public override void resetStatus()
+    {
+        Debug.Log("reset shock");
+        base.resetStatus();
+        isStartEfectResolved = false;
+        pastChainTargets.Clear();
+    }
 }

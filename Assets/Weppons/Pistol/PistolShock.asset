@@ -17,3 +17,5 @@ MonoBehaviour:
   tick: 0.1
   damage: 0.1
   slow: -0.1
+  chainCount: 2
+  chainRange: 3

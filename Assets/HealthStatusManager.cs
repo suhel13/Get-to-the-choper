@@ -26,6 +26,8 @@ public class HealthStatusManager : MonoBehaviour
     {
         foreach (KeyValuePair<int, Status> entry in Statuses)
         {
+            entry.Value.startEfect(this);
+
             // do something with entry.Value or entry.Key
             if (entry.Value.resolveStatus(Time.deltaTime, this))
             {
@@ -73,12 +75,11 @@ public class HealthStatusManager : MonoBehaviour
     public void addStatus(Status status)
     {
         status.resolveCombinations(this, Statuses);
-        Debug.Log(status.id +" name "+ status.name);
+        //Debug.Log(status.id +" name "+ status.name, this.gameObject);
 
         if (Statuses.ContainsKey(status.id))
         {
-            Debug.Log(status + "reset " + status.id +" name " + status.name);
-            Statuses[status.id].resetDuration();
+            Statuses[status.id].resetStatus();
         }
         else
         {
