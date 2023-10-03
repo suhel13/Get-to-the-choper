@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public IconManager iconManager { get; private set; }
+    public UIManager uiManager { get; private set; }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -19,8 +21,8 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
-        Debug.Log(nextStatusId());
-        Debug.Log(nextStatusId());
+        iconManager = GetComponentInChildren<IconManager>();
+        uiManager = GetComponentInChildren<UIManager>();
     }
     public int nextStatusId()
     {
@@ -31,5 +33,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         iconManager = GetComponentInChildren<IconManager>();
+        uiManager = GetComponentInChildren<UIManager>();
     }
 }

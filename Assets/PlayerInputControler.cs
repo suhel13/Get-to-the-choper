@@ -12,6 +12,10 @@ public class PlayerInputControler : MonoBehaviour
     InputAction aim;
     InputAction shoot;
     InputAction relode;
+    InputAction number1;
+    InputAction number2;
+    InputAction number3;
+    InputAction number4;
     Camera mainCam;
 
     [SerializeField] private InputActionAsset controls;
@@ -42,6 +46,16 @@ public class PlayerInputControler : MonoBehaviour
         relode = _inputActionMap.FindAction("Relode");
         relode.performed += onRelodeActionPerf;
 
+        number1 = _inputActionMap.FindAction("Number 1");
+        number2 = _inputActionMap.FindAction("Number 2");
+        number3 = _inputActionMap.FindAction("Number 3");
+        number4 = _inputActionMap.FindAction("Number 4");
+
+        number1.performed += ctx => onNumberActionPerf(ctx, 0);
+        number2.performed += ctx => onNumberActionPerf(ctx, 1);
+        number3.performed += ctx => onNumberActionPerf(ctx, 2);
+        number4.performed += ctx => onNumberActionPerf(ctx, 3);
+
     }
 
     // Update is called once per frame
@@ -57,6 +71,7 @@ public class PlayerInputControler : MonoBehaviour
     {
         _characterControler.movementVector = Vector2.zero;
     }
+
     void onAimActionPerf(InputAction.CallbackContext ctx)
     {
         _characterControler.lookAtTarget.position = mainCam.ScreenToWorldPoint(ctx.ReadValue<Vector2>());
@@ -70,8 +85,14 @@ public class PlayerInputControler : MonoBehaviour
     {
         _wepponManager.isShooting = false;
     }
+
     void onRelodeActionPerf(InputAction.CallbackContext ctx)
     {
         _wepponManager.activeGun.startRelode();
+    }
+
+    void onNumberActionPerf(InputAction.CallbackContext ctx, int id)
+    {
+        _wepponManager.swapWeppon(id);
     }
 }

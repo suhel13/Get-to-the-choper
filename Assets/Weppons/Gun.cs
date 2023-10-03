@@ -15,7 +15,7 @@ public abstract class Gun : MonoBehaviour
     [HideInInspector] public Slider relodeSlider;
 
     [SerializeField] int magSize;
-    [SerializeField] int mag;
+    public int mag;
     [SerializeField] float bulletSpeed;
     [SerializeField] float multiShoot;
     [SerializeField] float pelets;
@@ -24,6 +24,8 @@ public abstract class Gun : MonoBehaviour
     [SerializeField] protected Transform BarrelTransform;
     [SerializeField] List<StatusSO> statusesSO = new List<StatusSO>();
     [SerializeField] protected List<Status> statuses;
+
+    public WepponIconControler iconControler;
 
     protected void Start()
     {
@@ -55,6 +57,8 @@ public abstract class Gun : MonoBehaviour
                 fireRateTimer = 1 / fireRate;
                 //spawn projectail equal to pelets number
                 spawnBullets(damage, bulletSpeed);
+                if(iconControler != null)
+                    iconControler.updateWepponIconAmmo(mag + " / " + magSize);
             }
             stopedShooting = false;
         }
@@ -62,6 +66,7 @@ public abstract class Gun : MonoBehaviour
         {
             startRelode();
         }
+
     }
     protected virtual void spawnBullets(float damage, float speed)
     {
@@ -88,11 +93,19 @@ public abstract class Gun : MonoBehaviour
         isReloding = true;
         relodeTimer = relodeTime;
     }
+    public void cancelRelode()
+    {
+        relodeSlider.gameObject.SetActive(false);
+        isReloding = false;
+        relodeTimer = relodeTime;
+    }
     void endRelode()
     {
         relodeSlider.gameObject.SetActive(false);
         isReloding = false;
         mag = magSize;
         fireRateTimer = 0;
+        if (iconControler != null)
+            iconControler.updateWepponIconAmmo(mag + " / " + magSize);
     }
 }
