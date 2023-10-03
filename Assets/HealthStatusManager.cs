@@ -79,7 +79,10 @@ public class HealthStatusManager : MonoBehaviour
 
         if (Statuses.ContainsKey(status.id))
         {
-            Statuses[status.id].resetStatus();
+            Debug.Log("Reset Status class : " + status.GetType());
+            Debug.Log("Reset Status class : " + Statuses[status.id].GetType());
+
+            Statuses[status.id].resetStatus(status);
         }
         else
         {

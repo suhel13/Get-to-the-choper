@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 [Serializable]
 public abstract class Status
-{
+{ 
     public enum statusName { Bleed, Insinirate, Poison, Freeze, Wet, Shock };
     public statusName name;
     public int id;
@@ -74,22 +74,30 @@ public abstract class Status
         else
             return false;
     }
-    public virtual void startEfect(HealthStatusManager HSman)
-    {
+    public virtual void startEfect(HealthStatusManager HSman) //timing: in first frame after adding this status
+    {   }
+    public virtual void resolvePhysicsEfects(HealthStatusManager HSman) //timing: in fixed update
+    {   }
+    public virtual void resolveCombinations(HealthStatusManager HSman, Dictionary<int, Status> targetStatuses) //timing: before adding status
+    {   }
 
-    }
-    public virtual void resolvePhysicsEfects(HealthStatusManager HSman)
+    public void resetStatus(Status newStatus)
     {
+        switch (newStatus.name)
+        {
+            case statusName.Shock:
+                resetShock(newStatus as Shock);
+                break;
 
+            default:
+                Debug.Log("Default Reset");
+                timer = 0;
+                break;
+        }
     }
-    public virtual void resolveCombinations(HealthStatusManager HSman, Dictionary<int, Status> targetStatuses)
-    {
 
-    }
-    public virtual void resetStatus()
-    {
-        timer = 0;
-    }
+    public virtual void resetShock(Shock newStatus)
+    {   }
     public void statusIconUpdate()
     {
         statusIcon.setFillAmount((duration - timer) / duration);

@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public class Shock : Status
+public class Shock : Status 
 {
     float damage;
     float slow;
@@ -51,7 +51,7 @@ public class Shock : Status
             return;
         
         isStartEfectResolved = true;
-        Debug.Log("Shock start effect");
+        Debug.Log("Shock start effect ChainCount: "+ chainCount + " range: " + chainRange + " Past targets count: " + pastChainTargets.Count);
         if (chainCount > 0)
         {
             HealthStatusManager closesTarget = null;
@@ -85,6 +85,7 @@ public class Shock : Status
                 closesTarget.addStatus(this.copy());
                 Debug.DrawLine(HSman.transform.position, closesTarget.transform.position, Color.yellow, 0.2f);
             }
+            
         }
     }
 
@@ -108,11 +109,12 @@ public class Shock : Status
         }
         Debug.Log("chainCount: "+ chainCount + " range: " + chainRange);
     }
-    public override void resetStatus()
+    public override void resetShock(Shock newShock)
     {
         Debug.Log("reset shock");
-        base.resetStatus();
+        timer = 0;
         isStartEfectResolved = false;
-        pastChainTargets.Clear();
+        pastChainTargets = new List<HealthStatusManager>(newShock.pastChainTargets);
+        chainCount = newShock.chainCount;
     }
 }
