@@ -13,18 +13,6 @@ public class PersonalUIControler : MonoBehaviour
     public Slider hpSlider;
     public Slider relodeSlider;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public StatusIconControler createStatusIcon(Status.statusName statusName)
     {
         StatusIconControler iconControler = Instantiate(statusIconPrefab, transform).GetComponent<StatusIconControler>();
@@ -34,10 +22,10 @@ public class PersonalUIControler : MonoBehaviour
             case Status.statusName.Bleed:
                 iconControler.setSprites(GameManager.Instance.iconManager.bleedIcon, GameManager.Instance.iconManager.bleedIconBG);
                 break;
-            case Status.statusName.Freeze:
-                iconControler.setSprites(GameManager.Instance.iconManager.frezeIcon, GameManager.Instance.iconManager.frezeIconBG);
+            case Status.statusName.Frozen:
+                iconControler.setSprites(GameManager.Instance.iconManager.frozenIcon, GameManager.Instance.iconManager.frozenIconBG);
                 break;
-            case Status.statusName.Insinirate:
+           case Status.statusName.Insinirate:
                 iconControler.setSprites(GameManager.Instance.iconManager.incinirateIcon, GameManager.Instance.iconManager.incinirateIconBG);
                 break;
             case Status.statusName.Poison:
@@ -47,6 +35,15 @@ public class PersonalUIControler : MonoBehaviour
                 break;
             case Status.statusName.Shock:
                 iconControler.setSprites(GameManager.Instance.iconManager.shockIcon, GameManager.Instance.iconManager.shockIconBG);
+                break;
+            case Status.statusName.Acid:
+                iconControler.setSprites(GameManager.Instance.iconManager.acidIcon, GameManager.Instance.iconManager.acidIconBG);
+                break;
+            case Status.statusName.Smoke:
+                iconControler.setSprites(GameManager.Instance.iconManager.smokeIcon, GameManager.Instance.iconManager.smokeIconBG);
+                break;
+            case Status.statusName.Cold:
+                iconControler.setSprites(GameManager.Instance.iconManager.coldIcon, GameManager.Instance.iconManager.coldIconBG);
                 break;
         }
         return iconControler;

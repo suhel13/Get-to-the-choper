@@ -7,6 +7,9 @@ public class EnviomentStatusEfect : MonoBehaviour
 {
     [SerializeField] List<StatusSO> statusesSO = new List<StatusSO>();
     List<Status> statuses = new List<Status>();
+    public float duration;
+    float timer;
+    public bool isInfinite;
 
     // Start is called before the first frame update
     void Start()
@@ -16,7 +19,15 @@ public class EnviomentStatusEfect : MonoBehaviour
             Debug.Log(statSO.name);
             statuses.Add(statSO.createObject());
         }
-        Debug.Log(statuses.Count, this.gameObject);
+        timer = 0.0f;
+    }
+    private void Update()
+    {
+        if(isInfinite) 
+            return;
+        timer += Time.deltaTime;
+        if(timer > duration)
+            Destroy(this.gameObject);
     }
 
     private void OnTriggerStay2D(Collider2D collision)

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00efaac9b9a4e0e4b866b01bdf57e61f, type: 3}
-  m_Name: WetEfect
+  m_Name: Wet
   m_EditorClassIdentifier: 
   name: 4
   duration: 10

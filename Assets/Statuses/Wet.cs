@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Wet : Status
@@ -31,4 +32,33 @@ public class Wet : Status
         Debug.Log("Wet efect trigeer");
     }
 
+    public override bool resolveCombinations(HealthStatusManager HSman, Dictionary<int, Status> targetStatuses)
+    {
+        returnVal = true;
+        foreach (KeyValuePair<int, Status> entry in targetStatuses)
+        {
+            if (entry.Value.name == statusName.Cold)
+            {
+                statusesToAdd.Add(GameManager.Instance.baseStatuses.frozen.copy());
+                statusesToRemove.Add(entry.Key);
+                returnVal= false;
+                break;
+            }
+            if(entry.Value.name == statusName.Insinirate)
+            {
+                statusesToAdd.Add(GameManager.Instance.baseStatuses.smoke.copy());
+                statusesToRemove.Add(entry.Key);
+                returnVal = false;
+            }
+        }
+        foreach (Status status in statusesToAdd)
+        {
+            HSman.addStatus(status);
+        }
+        foreach (int id in statusesToRemove)
+        {
+            HSman.removeStatus(id);
+        }
+        return returnVal;
+    }
 }

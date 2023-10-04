@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b570b7039bc6d28458f17eefab232a6e, type: 3}
-  m_Name: pistolBleedTest
+  m_Name: Bleed
   m_EditorClassIdentifier: 
   name: 0
   duration: 10

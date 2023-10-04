@@ -85,7 +85,6 @@ public class Shock : Status
                 closesTarget.addStatus(this.copy());
                 Debug.DrawLine(HSman.transform.position, closesTarget.transform.position, Color.yellow, 0.2f);
             }
-            
         }
     }
 
@@ -97,7 +96,7 @@ public class Shock : Status
     {
         HSman.takeDamage(damage);
     }
-    public override void resolveCombinations(HealthStatusManager HSman, Dictionary<int, Status> targetStatuses)
+    public override bool resolveCombinations(HealthStatusManager HSman, Dictionary<int, Status> targetStatuses)
     {
         foreach (KeyValuePair<int, Status> entry in targetStatuses)
         {
@@ -108,6 +107,7 @@ public class Shock : Status
             }
         }
         Debug.Log("chainCount: "+ chainCount + " range: " + chainRange);
+        return true;
     }
     public override void resetShock(Shock newShock)
     {

@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 44976544}
   - component: {fileID: 44976546}
   m_Layer: 0
-  m_Name: Freze
+  m_Name: Freeze
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -223,6 +223,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statusesSO:
   - {fileID: 11400000, guid: c37a74c583df05746948bf9e8d005e4f, type: 2}
+  duration: 0
+  isInfinite: 1
 --- !u!58 &44976546
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -432,6 +434,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 997784aaa58b2fd4cba786cc4a34c879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAlive: 0
+  canMove: 0
   speed: 0
   speedModifire: 1
   enviromentSpeedVector: []
@@ -1409,6 +1413,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 997784aaa58b2fd4cba786cc4a34c879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAlive: 0
+  canMove: 0
   speed: 5
   speedModifire: 1
   enviromentSpeedVector: []
@@ -1568,6 +1574,7 @@ Transform:
   m_Children:
   - {fileID: 1210843210}
   - {fileID: 2022965268}
+  - {fileID: 1934393911}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1736,12 +1743,18 @@ MonoBehaviour:
   bleedIconBG: {fileID: 21300000, guid: 07a59d147e127964ca01e2bbe4531dcc, type: 3}
   incinirateIcon: {fileID: 21300000, guid: 45b9b3cdc47a5df48a446a18c52a829f, type: 3}
   incinirateIconBG: {fileID: 21300000, guid: 7b93cf19902fb9342ad35b9f1e5b479e, type: 3}
-  frezeIcon: {fileID: 21300000, guid: 570e2da53e225124b978a9b5e202e4e7, type: 3}
-  frezeIconBG: {fileID: 21300000, guid: 6b83f6b518768a648b59b641cc514b8c, type: 3}
+  coldIcon: {fileID: 21300000, guid: 570e2da53e225124b978a9b5e202e4e7, type: 3}
+  coldIconBG: {fileID: 21300000, guid: 6b83f6b518768a648b59b641cc514b8c, type: 3}
   shockIcon: {fileID: 21300000, guid: e1ca240b0dcf9d546913fbf4ac259b88, type: 3}
   shockIconBG: {fileID: 21300000, guid: c17bda82d09be0e45bb174f07eb80047, type: 3}
   wetIcon: {fileID: 21300000, guid: f9b2735c7d348a643adbc33d935c9c3d, type: 3}
   wetIconBG: {fileID: 21300000, guid: 5057d73a5f24b7c49ad87f1443d799a8, type: 3}
+  acidIcon: {fileID: 21300000, guid: fdcec58728322ca4bbe5322f42baf197, type: 3}
+  acidIconBG: {fileID: 21300000, guid: 5231a51a3a9f8234db2c1f8860d0079c, type: 3}
+  frozenIcon: {fileID: 21300000, guid: c29aed0c64d75ab4daac635c96aad2a2, type: 3}
+  frozenIconBG: {fileID: 21300000, guid: 18c70f357b145914db08f7fdd30319c9, type: 3}
+  smokeIcon: {fileID: 21300000, guid: 705312f393878354fb692ddb00165f0c, type: 3}
+  smokeIconBG: {fileID: 21300000, guid: 528bcfce7b105bf469da81cf79139c83, type: 3}
 --- !u!1 &1237628459
 GameObject:
   m_ObjectHideFlags: 0
@@ -1822,6 +1835,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 997784aaa58b2fd4cba786cc4a34c879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAlive: 0
+  canMove: 0
   speed: 0
   speedModifire: 1
   enviromentSpeedVector: []
@@ -2501,6 +2516,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 997784aaa58b2fd4cba786cc4a34c879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAlive: 0
+  canMove: 0
   speed: 0
   speedModifire: 1
   enviromentSpeedVector: []
@@ -2648,7 +2665,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!58 &1650882940
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2679,6 +2696,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statusesSO:
   - {fileID: 11400000, guid: 67c52603c681d0f468b75819d5dd802a, type: 2}
+  duration: 0
+  isInfinite: 1
 --- !u!212 &1650882942
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2989,6 +3008,62 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1934393910
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1934393911}
+  - component: {fileID: 1934393912}
+  m_Layer: 0
+  m_Name: BaseStatuses
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1934393911
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934393910}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1138361949}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1934393912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934393910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8102fd01adec2a741b710638099de870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bleed:
+    name: 0
+    id: 0
+    statusIcon: {fileID: 0}
+  acidSO: {fileID: 11400000, guid: 79944af9a3b632b4fa0bd573b0f04b20, type: 2}
+  bleedSO: {fileID: 11400000, guid: 4016f95306b0fcb428f7116e300545a3, type: 2}
+  coldSO: {fileID: 11400000, guid: c37a74c583df05746948bf9e8d005e4f, type: 2}
+  frozenSO: {fileID: 11400000, guid: 6d37b2b51ca362e46aaac201057457bf, type: 2}
+  incinirateSO: {fileID: 11400000, guid: a52d18f13f93e7540b8240afe781e356, type: 2}
+  shockSO: {fileID: 11400000, guid: 0a789149c6bcaab4d986baee11ade06e, type: 2}
+  smokeSO: {fileID: 11400000, guid: 3c7f6680318023c4ea26d56e7e7c54f0, type: 2}
+  wetSO: {fileID: 11400000, guid: 67c52603c681d0f468b75819d5dd802a, type: 2}
 --- !u!1 &2022965267
 GameObject:
   m_ObjectHideFlags: 0
@@ -3407,8 +3482,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3316574837226423394, guid: 04cbc2f9b7e643d42b60d2b5ffc8406d, type: 3}
       propertyPath: statusesSO.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3316574837226423394, guid: 04cbc2f9b7e643d42b60d2b5ffc8406d, type: 3}
+      propertyPath: statusesSO.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: c37a74c583df05746948bf9e8d005e4f, type: 2}
     - target: {fileID: 3316574837226423394, guid: 04cbc2f9b7e643d42b60d2b5ffc8406d, type: 3}
       propertyPath: statusesSO.Array.data[1]
       value: 

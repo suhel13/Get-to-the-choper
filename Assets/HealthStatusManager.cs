@@ -74,22 +74,33 @@ public class HealthStatusManager : MonoBehaviour
 
     public void addStatus(Status status)
     {
-        status.resolveCombinations(this, Statuses);
-        //Debug.Log(status.id +" name "+ status.name, this.gameObject);
-
-        if (Statuses.ContainsKey(status.id))
+        if (status.resolveCombinations(this, Statuses))
         {
-            Debug.Log("Reset Status class : " + status.GetType());
-            Debug.Log("Reset Status class : " + Statuses[status.id].GetType());
+            if (Statuses.ContainsKey(status.id))
+            {
+                Statuses[status.id].resetStatus(status);
+            }
+            else
+            {
+                Statuses.Add(status.id, status);
+                StatusIconControler statusIconControler = personalUIControler.createStatusIcon(status.name);
+                personalUIControler.statusIcons.Add(statusIconControler);
+                status.statusIcon = statusIconControler;
+            }
+        }
+    }
 
-            Statuses[status.id].resetStatus(status);
+    public void addPush(Push push, Vector2 dir)
+    {
+        push.resolveCombinations(this, Statuses);
+        push.setDir(dir);
+        if (Statuses.ContainsKey(push.id))
+        {
+            Statuses[push.id].resetStatus(push);
         }
         else
         {
-            Statuses.Add(status.id, status);
-            StatusIconControler statusIconControler = personalUIControler.createStatusIcon(status.name);
-            personalUIControler.statusIcons.Add(statusIconControler);
-            status.statusIcon = statusIconControler;
+            Statuses.Add(push.id, push);
         }
     }
 

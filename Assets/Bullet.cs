@@ -23,7 +23,7 @@ public class Bullet : MonoBehaviour
             {
                 target.addStatus(status.copy());
             }
-            Destroy(this.gameObject);
         }
+        Destroy(this.gameObject);
     }
 }

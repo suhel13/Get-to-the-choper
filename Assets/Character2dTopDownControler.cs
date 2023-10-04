@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Character2dTopDownControler : MonoBehaviour
 {
+    public bool isAlive;
+    public bool canMove;
     [SerializeField] float speed;
     public float speedModifire = 1;
     public Dictionary<int, float> speedModifires = new Dictionary<int, float>();
@@ -42,20 +44,27 @@ public class Character2dTopDownControler : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        speedModifire = 1;
-        foreach (KeyValuePair<int, float> entry in speedModifires)
+        if (canMove)
         {
-            speedModifire += entry.Value;
+            speedModifire = 1;
+            foreach (KeyValuePair<int, float> entry in speedModifires)
+            {
+                speedModifire += entry.Value;
+            }
+            speedModifires.Clear();
+            rb2D.velocity = movementVector * speed * speedModifire;
         }
-        speedModifires.Clear();
+        else
+        {
+            rb2D.velocity = Vector2.zero;
+        }
+        canMove = true;
 
-        rb2D.velocity = movementVector * speed * speedModifire;
-        
         foreach(Vector2 evnSpeed in enviromentSpeedVector) 
         {
             rb2D.velocity += evnSpeed;
         }
-        enviromentSpeedVector.Clear();
-
+       enviromentSpeedVector.Clear();
     }
+
 }

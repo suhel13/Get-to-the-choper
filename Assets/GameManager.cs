@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     public IconManager iconManager { get; private set; }
     public UIManager uiManager { get; private set; }
+    public BaseStatuses baseStatuses { get; private set; }
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour
         }
         iconManager = GetComponentInChildren<IconManager>();
         uiManager = GetComponentInChildren<UIManager>();
+        baseStatuses = GetComponentInChildren<BaseStatuses>();
     }
     public int nextStatusId()
     {

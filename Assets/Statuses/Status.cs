@@ -5,7 +5,7 @@ using UnityEngine;
 [Serializable]
 public abstract class Status
 { 
-    public enum statusName { Bleed, Insinirate, Poison, Freeze, Wet, Shock };
+    public enum statusName { Bleed, Insinirate, Poison, Frozen, Wet, Shock, Acid, Cold, Smoke, Push };
     public statusName name;
     public int id;
     protected float duration;
@@ -15,12 +15,14 @@ public abstract class Status
     public StatusIconControler statusIcon;
     protected int presision;
     protected bool isStartEfectResolved;
+    protected bool returnVal;
     protected List<int> statusesToRemove = new List<int>();
+    protected List<Status> statusesToAdd = new List<Status>();
 
 
     public Status(float duration, float tick)
     {
-        this.id = GameManager.Instance.nextStatusId();
+        id = GameManager.Instance.nextStatusId();
         this.duration = duration;
         if (this.duration <= 0)
             this.duration = 0.01f;
@@ -78,8 +80,12 @@ public abstract class Status
     {   }
     public virtual void resolvePhysicsEfects(HealthStatusManager HSman) //timing: in fixed update
     {   }
-    public virtual void resolveCombinations(HealthStatusManager HSman, Dictionary<int, Status> targetStatuses) //timing: before adding status
-    {   }
+    /// <summary>
+    /// Check for Combinations with other elements on target.
+    /// </summary>
+    /// <returns>Returns a bool that specify if you want to add this status to target.</returns>
+    public virtual bool resolveCombinations(HealthStatusManager HSman, Dictionary<int, Status> targetStatuses) //timing: before adding status
+    { return true;  }
 
     public void resetStatus(Status newStatus)
     {
