@@ -7,6 +7,7 @@ public class AcidSO : StatusSO
 {
     public float damage;
     public float armorReduction;
+    public float bleedDamageMultiplayer;
     private void Reset()
     {
         name = Status.statusName.Acid;

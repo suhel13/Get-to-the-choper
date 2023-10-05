@@ -11,6 +11,7 @@ public class WepponManager : MonoBehaviour
     public bool isShooting;
     PersonalUIControler personalUIControler;
     [SerializeField] bool isPlayer = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -77,6 +78,6 @@ public class WepponManager : MonoBehaviour
         {
             gun.updateGunsTimers(delthaTime);
         }
-        activeGun.updateGunsRelodeTimers(delthaTime);
+        activeGun.updateGunRelodeTimer(delthaTime);
     }
 }

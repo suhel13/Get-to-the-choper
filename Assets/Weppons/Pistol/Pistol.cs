@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class Pistol : Gun
 {
-    
-    public Pistol(float damage, float fireRate, float relodeTimer, int magSize, float bulletSpeed, float multiShoot, float pelets) :
-        base(damage, fireRate, relodeTimer, magSize, bulletSpeed, multiShoot, pelets)
-    {
-
-    }
-
     private void Start()
     {
         base.Start();

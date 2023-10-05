@@ -3,50 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Gun : MonoBehaviour
+public abstract class Gun : Weppon
 {
-    [SerializeField] float damage;
-    [SerializeField] float fireRate;
-    float fireRateTimer;
-    [SerializeField] float relodeTime;
-    float relodeTimer;
-    bool isReloding;
+
+    [SerializeField] protected float relodeTime;
+    protected float relodeTimer;
+    protected bool isReloding;
     public bool stopedShooting;
     [HideInInspector] public Slider relodeSlider;
 
-    [SerializeField] int magSize;
+    [SerializeField] protected int magSize;
     public int mag;
-    [SerializeField] float bulletSpeed;
-    [SerializeField] float multiShoot;
-    [SerializeField] float pelets;
+    [SerializeField] protected float bulletSpeed;
+    [SerializeField] protected float multiShoot;
+    [SerializeField] protected float pelets;
     [SerializeField] protected GameObject bulletPrefab;
     protected GameObject tempBulletGO;
     [SerializeField] protected Transform BarrelTransform;
-    [SerializeField] List<StatusSO> statusesSO = new List<StatusSO>();
-    [SerializeField] protected List<Status> statuses;
 
-    public WepponIconControler iconControler;
+    protected new void Start()
+    {
+        base.Start();
+    }
 
-    protected void Start()
-    {
-        statuses = new List<Status>();
-        foreach (var statSO in statusesSO)
-        {
-            Debug.Log(statSO.name);
-            statuses.Add(statSO.createObject());
-        }
-    }
-    public Gun(float damage, float fireRate, float relodeTime, int magSize, float bulletSpeed, float multiShoot, float pelets)
-    {
-        this.damage = damage;
-        this.fireRate = fireRate;
-        this.relodeTime = relodeTime;
-        this.magSize = magSize;
-        this.mag = magSize;
-        this.bulletSpeed = bulletSpeed;
-        this.multiShoot = multiShoot;
-        this.pelets = pelets;
-    }
     public void shoot()
     {
         if (mag > 0 && isReloding == false)
@@ -76,7 +55,7 @@ public abstract class Gun : MonoBehaviour
     {
         fireRateTimer -= delthaTime;
     }
-    public void updateGunsRelodeTimers(float delthaTime)
+    public void updateGunRelodeTimer(float delthaTime)
     {
         relodeTimer -= delthaTime;
         relodeSlider.value = relodeTimer / relodeTime;
@@ -86,20 +65,19 @@ public abstract class Gun : MonoBehaviour
         }
     }
 
-
-    public void startRelode()
+    public override void startRelode()
     {
         relodeSlider.gameObject.SetActive(true);
         isReloding = true;
         relodeTimer = relodeTime;
     }
-    public void cancelRelode()
+    public override void cancelRelode()
     {
         relodeSlider.gameObject.SetActive(false);
         isReloding = false;
         relodeTimer = relodeTime;
     }
-    void endRelode()
+    protected override void endRelode()
     {
         relodeSlider.gameObject.SetActive(false);
         isReloding = false;

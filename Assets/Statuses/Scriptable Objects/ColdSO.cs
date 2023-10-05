@@ -7,7 +7,6 @@ public class ColdSO : StatusSO
 {
 
     public float slow;
-    [Header("Combo Efect")]
 
     private void Reset()
     {

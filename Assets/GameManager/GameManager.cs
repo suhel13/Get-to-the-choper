@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public UIManager uiManager { get; private set; }
     public BaseStatuses baseStatuses { get; private set; }
 
+    public GameObject player;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
