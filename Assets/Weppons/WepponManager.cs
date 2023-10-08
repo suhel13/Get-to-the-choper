@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class WepponManager : MonoBehaviour
 {
-    public List<Gun> GunList;
-    public Gun activeGun;
-    public bool isShooting;
+    public List<Weppon> WepponList;
+    public Weppon activeWeppon;
+    public bool isAttacking;
     PersonalUIControler personalUIControler;
     [SerializeField] bool isPlayer = false;
 
@@ -16,26 +16,29 @@ public class WepponManager : MonoBehaviour
     void Start()
     {
         personalUIControler = GetComponentInChildren<PersonalUIControler>();
-        GunList = GetComponentsInChildren<Gun>(true).ToList<Gun>();
-        activeGun = GunList[0];
-        Debug.Log(GunList.Count);
-        Debug.Log(GunList[0]);
+        WepponList = GetComponentsInChildren<Weppon>(true).ToList<Weppon>();
+        activeWeppon = WepponList[0];
+        Debug.Log(WepponList.Count);
+        Debug.Log(WepponList[0]);
         Debug.Log(GameManager.Instance.uiManager.wepponIconControlers[0]);
 
-        for (int i = 0; i < GunList.Count; i++)
+        for (int i = 0; i < WepponList.Count; i++)
         {
             Debug.Log(i);
-            GunList[i].relodeSlider = personalUIControler.relodeSlider;
+            if (WepponList[i] is Gun)
+            {
+                (WepponList[i] as Gun).relodeSlider = personalUIControler.relodeSlider;
+            }
             Debug.Log(GameManager.Instance.uiManager.wepponIconControlers[i]);
 
             if (isPlayer)
             {
-                GunList[i].iconControler = GameManager.Instance.uiManager.wepponIconControlers[i];
+                WepponList[i].iconControler = GameManager.Instance.uiManager.wepponIconControlers[i];
             }
         } 
         if(isPlayer)
         {
-            GunList[0].iconControler.ActiveWepponIcon.SetActive(true);
+            WepponList[0].iconControler.ActiveWepponIcon.SetActive(true);
         }
 
         personalUIControler.relodeSlider.gameObject.SetActive(false);
@@ -43,41 +46,43 @@ public class WepponManager : MonoBehaviour
 
     private void Update()
     {
-        if (isShooting)
+        if (isAttacking)
         {
-            shoot();
+            attack();
         }
         else
         {
-            activeGun.stopedShooting = true;
+            activeWeppon.stopedShooting = true;
         }
         updateGunsTimers(Time.deltaTime);
     }
-    public void shoot()
+    public void attack()
     {
-        activeGun.shoot();
+        activeWeppon.attack();
     }
     public void swapWeppon(int id)
     {
-        activeGun.iconControler.ActiveWepponIcon.SetActive(false);
-        activeGun.cancelRelode();
-        if(GunList.Count > id) 
+        activeWeppon.iconControler.ActiveWepponIcon.SetActive(false);
+        activeWeppon.cancelRelode();
+        if(WepponList.Count > id) 
         {
-            activeGun = GunList[id];
-            activeGun.iconControler.ActiveWepponIcon.SetActive(true);
-            if(activeGun.mag == 0)
+            activeWeppon = WepponList[id];
+            activeWeppon.iconControler.ActiveWepponIcon.SetActive(true);
+
+            if((activeWeppon as Gun).mag == 0)
             {
-                activeGun.startRelode();
+                activeWeppon.startRelode();
             }
         }
     }
 
     public void updateGunsTimers(float delthaTime)
     {
-        foreach (Gun gun in GunList)
+        foreach (Weppon weppon in WepponList)
         {
-            gun.updateGunsTimers(delthaTime);
+            weppon.updateGunsTimers(delthaTime);
         }
-        activeGun.updateGunRelodeTimer(delthaTime);
+        if(activeWeppon is Gun)
+            activeWeppon.updateGunRelodeTimer(delthaTime);
     }
 }

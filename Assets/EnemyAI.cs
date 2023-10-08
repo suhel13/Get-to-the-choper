@@ -24,13 +24,28 @@ public class EnemyAI : MonoBehaviour
     private void Update()
     {
         lookAt(GameManager.Instance.player.transform.position);
-        if (attackRange > Vector2.Distance(GameManager.Instance.player.transform.position, transform.position))
+        if (Vector2.Distance(GameManager.Instance.player.transform.position, transform.position) > attackRange)
         {
-            setMovementVector((GameManager.Instance.player.transform.position - transform.position).normalized);
             switch (type)
             {
                 case EnemyType.mele:
+                    setMovementVector((GameManager.Instance.player.transform.position - transform.position).normalized);
+                    break;
 
+                case EnemyType.range:
+
+                    break;
+
+                default: break;
+            }
+        }
+        else
+        {
+            setMovementVector(Vector2.zero);
+            switch (type)
+            {
+                case EnemyType.mele:
+                    _wepponManager.activeWeppon.attack();
                     break;
 
                 case EnemyType.range:

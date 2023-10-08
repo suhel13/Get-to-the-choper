@@ -9,13 +9,13 @@ public class Weppon : MonoBehaviour
     [SerializeField] protected float damage;
     [SerializeField] protected float fireRate;
     protected float fireRateTimer;
-
+    [HideInInspector] public bool stopedShooting;
 
     [SerializeField] protected List<StatusSO> statusesSO = new List<StatusSO>();
     [SerializeField] protected List<Status> statuses;
 
-    public WepponIconControler iconControler;
-    public AnimatorController animatorController;
+    [HideInInspector] public WepponIconControler iconControler;
+    [HideInInspector] public Animator animator;
 
     protected void Start()
     {
@@ -25,22 +25,23 @@ public class Weppon : MonoBehaviour
             Debug.Log(statSO.name);
             statuses.Add(statSO.createObject());
         }
-        animatorController = GetComponent<AnimatorController>();
+        animator = GetComponent<Animator>();
     }
-    public void shoot()
+    public virtual void attack()
     {
         if (fireRateTimer <= 0)
         {
+            animator.SetTrigger("Attack"); 
             fireRateTimer = 1 / fireRate;
         }
     }
 
-    public void updateGunsTimers(float delthaTime)
+    public virtual void updateGunsTimers(float delthaTime)
     {
         fireRateTimer -= delthaTime;
     }
 
-    public virtual void updateGunsRelodeTimers(float delthaTime)
+    public virtual void updateGunRelodeTimer(float delthaTime)
     {
 
     }

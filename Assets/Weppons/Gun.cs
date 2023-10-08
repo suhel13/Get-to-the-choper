@@ -9,8 +9,8 @@ public abstract class Gun : Weppon
     [SerializeField] protected float relodeTime;
     protected float relodeTimer;
     protected bool isReloding;
-    public bool stopedShooting;
-    [HideInInspector] public Slider relodeSlider;
+
+    public Slider relodeSlider;
 
     [SerializeField] protected int magSize;
     public int mag;
@@ -26,12 +26,13 @@ public abstract class Gun : Weppon
         base.Start();
     }
 
-    public void shoot()
+    public override void attack()
     {
         if (mag > 0 && isReloding == false)
         {
             if (fireRateTimer <= 0)
             {
+                animator.SetTrigger("Attack"); 
                 mag -= 1;
                 fireRateTimer = 1 / fireRate;
                 //spawn projectail equal to pelets number
@@ -51,11 +52,11 @@ public abstract class Gun : Weppon
     {
 
     }
-    public void updateGunsTimers(float delthaTime)
+    public override void updateGunsTimers(float delthaTime)
     {
         fireRateTimer -= delthaTime;
     }
-    public void updateGunRelodeTimer(float delthaTime)
+    public override void updateGunRelodeTimer(float delthaTime)
     {
         relodeTimer -= delthaTime;
         relodeSlider.value = relodeTimer / relodeTime;
@@ -64,7 +65,6 @@ public abstract class Gun : Weppon
             endRelode();
         }
     }
-
     public override void startRelode()
     {
         relodeSlider.gameObject.SetActive(true);

@@ -79,16 +79,16 @@ public class PlayerInputControler : MonoBehaviour
 
     void onShootActionPerf(InputAction.CallbackContext ctx)
     {
-        _wepponManager.isShooting = true;
+        _wepponManager.isAttacking = true;
     }
     void onShootActionCanc(InputAction.CallbackContext ctx)
     {
-        _wepponManager.isShooting = false;
+        _wepponManager.isAttacking = false;
     }
 
     void onRelodeActionPerf(InputAction.CallbackContext ctx)
     {
-        _wepponManager.activeGun.startRelode();
+        _wepponManager.activeWeppon.startRelode();
     }
 
     void onNumberActionPerf(InputAction.CallbackContext ctx, int id)

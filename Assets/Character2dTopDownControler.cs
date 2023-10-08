@@ -19,18 +19,21 @@ public class Character2dTopDownControler : MonoBehaviour
     public WepponManager wepponManager;
     Rigidbody2D rb2D;
 
+    PersonalUIControler persControler;
+
     // Start is called before the first frame update
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
         lookAtTarget.transform.parent = transform.parent;
         wepponManager = GetComponent<WepponManager>();
-
+        persControler = GetComponentInChildren<PersonalUIControler>();
     }
     private void Update()
     {
         float rotation = Mathf.Atan2((lookAtTarget.position.x - this.transform.position.x), (lookAtTarget.position.y - this.transform.position.y)) * 180 / Mathf.PI * -1;
         this.transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, rotation);
+        persControler.fixedToParetn.updatePosAndRot();
     }
 
     public void addSpeedModifire(int id, float modifire)

@@ -13,6 +13,12 @@ public class PersonalUIControler : MonoBehaviour
     public Slider hpSlider;
     public Slider relodeSlider;
 
+    public FixedToParent fixedToParetn;
+    public void Start()
+    {
+        fixedToParetn = GetComponent<FixedToParent>();
+    }
+
     public StatusIconControler createStatusIcon(Status.statusName statusName)
     {
         StatusIconControler iconControler = Instantiate(statusIconPrefab, transform).GetComponent<StatusIconControler>();
