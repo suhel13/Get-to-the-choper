@@ -40,14 +40,9 @@ public abstract class Gun : Weppon
                 if(iconControler != null)
                     iconControler.updateWepponIconAmmo(mag + " / " + magSize);
             }
-            stopedShooting = false;
         }
-        else if (isReloding == false && stopedShooting)
-        {
-            startRelode();
-        }
-
     }
+
     protected virtual void spawnBullets(float damage, float speed)
     {
 
@@ -65,11 +60,23 @@ public abstract class Gun : Weppon
             endRelode();
         }
     }
-    public override void startRelode()
+    public override void startRelode(bool forced)
     {
-        relodeSlider.gameObject.SetActive(true);
-        isReloding = true;
-        relodeTimer = relodeTime;
+        if (isReloding == false)
+        {
+            if (forced)
+            {
+                relodeSlider.gameObject.SetActive(true);
+                isReloding = true;
+                relodeTimer = relodeTime;
+            }
+            else if (mag == 0)
+            {
+                relodeSlider.gameObject.SetActive(true);
+                isReloding = true;
+                relodeTimer = relodeTime;
+            }
+        }
     }
     public override void cancelRelode()
     {

@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public IconManager iconManager { get; private set; }
     public UIManager uiManager { get; private set; }
     public BaseStatuses baseStatuses { get; private set; }
+    public SpawnManager spawnManager { get; private set; }
 
     public GameObject player;
 
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviour
         iconManager = GetComponentInChildren<IconManager>();
         uiManager = GetComponentInChildren<UIManager>();
         baseStatuses = GetComponentInChildren<BaseStatuses>();
+        spawnManager = GetComponentInChildren<SpawnManager>();
     }
     public int nextStatusId()
     {
@@ -36,7 +38,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        iconManager = GetComponentInChildren<IconManager>();
-        uiManager = GetComponentInChildren<UIManager>();
+
     }
 }

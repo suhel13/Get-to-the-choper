@@ -106,6 +106,6 @@ public class HealthStatusManager : MonoBehaviour
 
     void death()
     {
-
+        Destroy(this.gameObject);
     }
 }

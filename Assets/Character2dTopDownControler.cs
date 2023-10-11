@@ -10,6 +10,8 @@ public class Character2dTopDownControler : MonoBehaviour
     public bool isAlive;
     public bool canMove;
     [SerializeField] float speed;
+    public bool canRotate;
+    [SerializeField] float rotateSpeed;
     public float speedModifire = 1;
     public Dictionary<int, float> speedModifires = new Dictionary<int, float>();
     public List<Vector2> enviromentSpeedVector = new List<Vector2>();
@@ -31,11 +33,55 @@ public class Character2dTopDownControler : MonoBehaviour
     }
     private void Update()
     {
-        float rotation = Mathf.Atan2((lookAtTarget.position.x - this.transform.position.x), (lookAtTarget.position.y - this.transform.position.y)) * 180 / Mathf.PI * -1;
-        this.transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, rotation);
+        if (canRotate)
+            rotate();
+        else
+            canRotate = true;
+
         persControler.fixedToParetn.updatePosAndRot();
     }
+    void rotate()
+    {
+        float angleDiff = Mathf.Atan2((lookAtTarget.position.x - this.transform.position.x), (lookAtTarget.position.y - this.transform.position.y)) * 180 / Mathf.PI * (-1) - transform.eulerAngles.z;
+        if (angleDiff > 180)
+            angleDiff -= 360;
+        else if (angleDiff < -180)
+            angleDiff += 360;
 
+        Debug.Log(angleDiff, this.gameObject);
+
+        if (angleDiff > 0)
+        {
+            if (rotateSpeed * Time.deltaTime < angleDiff)
+            {
+                Debug.Log("1");
+                transform.Rotate(Vector3.forward, rotateSpeed * Time.deltaTime);
+            }
+                //transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z + rotateSpeed * Time.deltaTime);
+            else
+            {
+                Debug.Log("2");
+                transform.Rotate(Vector3.forward, angleDiff);
+            }
+                //transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z + angleDiff);
+        }
+        else if (angleDiff < 0)
+        {
+            if (rotateSpeed * Time.deltaTime < Mathf.Abs(angleDiff))
+            {
+
+                Debug.Log("3");
+                transform.Rotate(Vector3.forward, - rotateSpeed * Time.deltaTime);
+            }
+                //transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z + rotateSpeed * Time.deltaTime);
+            else
+            {
+                Debug.Log("4");
+                transform.Rotate(Vector3.forward, angleDiff);
+            }
+                //transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z + angleDiff);
+        }
+    }
     public void addSpeedModifire(int id, float modifire)
     {
         if(speedModifires.ContainsKey(id) == false) 

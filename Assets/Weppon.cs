@@ -46,7 +46,7 @@ public class Weppon : MonoBehaviour
 
     }
 
-    public virtual void startRelode()
+    public virtual void startRelode(bool forced)
     {
 
     }

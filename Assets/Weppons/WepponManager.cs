@@ -52,7 +52,7 @@ public class WepponManager : MonoBehaviour
         }
         else
         {
-            activeWeppon.stopedShooting = true;
+            activeWeppon.startRelode(false);
         }
         updateGunsTimers(Time.deltaTime);
     }
@@ -69,9 +69,9 @@ public class WepponManager : MonoBehaviour
             activeWeppon = WepponList[id];
             activeWeppon.iconControler.ActiveWepponIcon.SetActive(true);
 
-            if((activeWeppon as Gun).mag == 0)
+            if(activeWeppon is Gun)
             {
-                activeWeppon.startRelode();
+                activeWeppon.startRelode(false);
             }
         }
     }

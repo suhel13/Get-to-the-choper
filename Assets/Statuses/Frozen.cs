@@ -21,6 +21,10 @@ public class Frozen : Status
 
     public override Status copy() { return new Frozen(this, false); }
 
+    public override void normalEffect(HealthStatusManager HSman)
+    {
+        HSman.GetComponent<Character2dTopDownControler>().canRotate = false;
+    }
     public override void resolvePhysicsEfects(HealthStatusManager HSman)
     {
         HSman.GetComponent<Character2dTopDownControler>().canMove = false;

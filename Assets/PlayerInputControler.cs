@@ -88,7 +88,7 @@ public class PlayerInputControler : MonoBehaviour
 
     void onRelodeActionPerf(InputAction.CallbackContext ctx)
     {
-        _wepponManager.activeWeppon.startRelode();
+        _wepponManager.activeWeppon.startRelode(true);
     }
 
     void onNumberActionPerf(InputAction.CallbackContext ctx, int id)
