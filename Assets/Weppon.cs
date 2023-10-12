@@ -12,14 +12,13 @@ public class Weppon : MonoBehaviour
     [HideInInspector] public bool stopedShooting;
 
     [SerializeField] protected List<StatusSO> statusesSO = new List<StatusSO>();
-    [SerializeField] protected List<Status> statuses;
+    [SerializeField] protected List<Status> statuses = new List<Status>();
 
     [HideInInspector] public WepponIconControler iconControler;
     [HideInInspector] public Animator animator;
 
     protected void Start()
     {
-        statuses = new List<Status>();
         foreach (var statSO in statusesSO)
         {
             Debug.Log(statSO.name);

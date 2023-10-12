@@ -43,10 +43,20 @@ public class SpawnManager : MonoBehaviour
             levelTimer = 0;
             spawnLevel++;
         }
+
         if (spawsTimer >= spawnsTime[spawnLevel])
         {
             spawsTimer = 0;
-            spawEnemy(enemyType.knife);
+
+            switch (spawnLevel)
+            {
+                case 0:
+                    spawEnemy(enemyType.knife);
+                    break;
+                case 1:
+                    spawEnemy(enemyType.knife);
+                    break;
+            }
         }
     }
 

@@ -9,7 +9,6 @@ public class PushSO : StatusSO
     public float maxSpeed;
     public float minSpeed;
     public float pushFallOff;
-
     private void Reset()
     {
         name = Status.statusName.Push;

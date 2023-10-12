@@ -14,6 +14,7 @@ public abstract class Gun : Weppon
 
     [SerializeField] protected int magSize;
     public int mag;
+    [SerializeField] protected float bulletLifeTime;
     [SerializeField] protected float bulletSpeed;
     [SerializeField] protected float multiShoot;
     [SerializeField] protected float pelets;

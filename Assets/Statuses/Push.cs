@@ -28,11 +28,11 @@ public class Push : Status
 
     public Push(PushSO pushSO) : base(pushSO.duration, pushSO.tick)
     {
-        this.dir = pushSO.dir;
-        this.maxSpeed = pushSO.maxSpeed;
-        this.minSpeed = pushSO.minSpeed;
-        this.pushFallOff = pushSO.pushFallOff;
-        this.name = statusName.Push;
+        dir = pushSO.dir;
+        maxSpeed = pushSO.maxSpeed;
+        minSpeed = pushSO.minSpeed;
+        pushFallOff = pushSO.pushFallOff;
+        name = statusName.Push;
     }
     
     public override void resolvePhysicsEfects(HealthStatusManager HSman)

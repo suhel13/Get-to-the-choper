@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public class HealthStatusManager : MonoBehaviour
+public class HealthStatusManager : MonoBehaviour, IPushAble, IDamageAble
 {
     public float Hp;
     public float maxHp;
@@ -35,7 +35,8 @@ public class HealthStatusManager : MonoBehaviour
             }
             else
             {
-                Statuses[entry.Key].statusIconUpdate();
+                if(entry.Value is Push == false)
+                    Statuses[entry.Key].statusIconUpdate();
             }
         }
         foreach (int key in statusesToRemove)
@@ -65,10 +66,12 @@ public class HealthStatusManager : MonoBehaviour
     }
     public void removeStatus(int id)
     {
-        Destroy(Statuses[id].statusIcon.gameObject);
-        personalUIControler.statusIcons.Remove(Statuses[id].statusIcon);
-        personalUIControler.updateStatusIconPositions();
-
+        if (Statuses[id] is Push == false)
+        {
+            Destroy(Statuses[id].statusIcon.gameObject);
+            personalUIControler.statusIcons.Remove(Statuses[id].statusIcon);
+            personalUIControler.updateStatusIconPositions();
+        }
         Statuses.Remove(id);
     }
 

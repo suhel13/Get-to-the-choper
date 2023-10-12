@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public UIManager uiManager { get; private set; }
     public BaseStatuses baseStatuses { get; private set; }
     public SpawnManager spawnManager { get; private set; }
+    public PlayerUpgrades playerUpgrades { get; private set; }
 
     public GameObject player;
 
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
         uiManager = GetComponentInChildren<UIManager>();
         baseStatuses = GetComponentInChildren<BaseStatuses>();
         spawnManager = GetComponentInChildren<SpawnManager>();
+        playerUpgrades = GetComponentInChildren<PlayerUpgrades>();
     }
     public int nextStatusId()
     {
