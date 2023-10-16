@@ -148,8 +148,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6840d46a619806145a473bafeae0098e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hp: 20
+  Hp: 10
   maxHp: 20
+  xpAmount: 5
 --- !u!114 &1627827643642590285
 MonoBehaviour:
   m_ObjectHideFlags: 0

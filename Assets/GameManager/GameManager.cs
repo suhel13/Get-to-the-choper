@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour 
 {
+    public enum gameState { play, pause, upgradePause}
+    public gameState state;
     int statusId = 0;
     public static GameManager Instance { get; private set; }
 
@@ -35,6 +37,22 @@ public class GameManager : MonoBehaviour
     public int nextStatusId()
     {
         return statusId++;
+    }
+    public void changeState(gameState state)
+    {
+        switch (state)
+        {
+            case gameState.play:
+                Time.timeScale = 1;
+                break;
+            case gameState.pause:
+                Time.timeScale = 0;
+                break;
+            case gameState.upgradePause:
+                Time.timeScale = 0;
+                break;
+        }
+        this.state = state;
     }
 
     // Start is called before the first frame update

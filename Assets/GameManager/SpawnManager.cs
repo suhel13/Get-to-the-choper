@@ -7,7 +7,7 @@ using UnityEngine.WSA;
 public class SpawnManager : MonoBehaviour
 {
     public enum enemyType { knife, pistol }
-
+    public GameObject xpParticlePrefab;
     public GameObject knifeEnemyPrefab;
     public GameObject pistolEnemyPrefab;
 
@@ -19,6 +19,7 @@ public class SpawnManager : MonoBehaviour
     float levelTimer;
     public List<float> spawnsTime = new List<float>();
     float spawsTimer;
+
     [ExecuteInEditMode]
     private void OnDrawGizmos()
     {   
@@ -77,5 +78,9 @@ public class SpawnManager : MonoBehaviour
                 enemys.Add(Instantiate(knifeEnemyPrefab, getSpawnPos(), Quaternion.identity));
                 break;
         }
+    }
+    public void spawnXp(int amount, Vector3 position)
+    {
+        Instantiate(xpParticlePrefab, position, Quaternion.identity).GetComponent<XpParticle>().xpAmount = amount;
     }
 }

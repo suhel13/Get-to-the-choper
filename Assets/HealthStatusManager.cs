@@ -14,7 +14,7 @@ public class HealthStatusManager : MonoBehaviour, IPushAble, IDamageAble
     public Dictionary<int, Status> Statuses = new Dictionary<int, Status>();
     List<int> statusesToRemove = new List<int>();
     PersonalUIControler personalUIControler;
-
+    public int xpAmount;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,7 +35,7 @@ public class HealthStatusManager : MonoBehaviour, IPushAble, IDamageAble
             }
             else
             {
-                if(entry.Value is Push == false)
+                if (entry.Value is Push == false)
                     Statuses[entry.Key].statusIconUpdate();
             }
         }
@@ -109,6 +109,10 @@ public class HealthStatusManager : MonoBehaviour, IPushAble, IDamageAble
 
     void death()
     {
+        if (xpAmount > 0)
+        {
+            GameManager.Instance.spawnManager.spawnXp(xpAmount, transform.position);
+        }
         Destroy(this.gameObject);
     }
 }

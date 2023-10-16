@@ -19,6 +19,7 @@ public class UpgradeButtonControler : MonoBehaviour
         this.upgradeSO = upgradeSO;
         icon.sprite = upgradeSO.icon;
         name.text = upgradeSO.upgradeName;
+
         GetComponent<Button>().onClick.AddListener(delegate { aplayUpgrade(); });
 
         for (int i = 0; i < upgradeSO.statTypeToUpgrades.Count; i++)
@@ -35,5 +36,16 @@ public class UpgradeButtonControler : MonoBehaviour
     {
         Debug.Log(upgradeSO.upgradeName + " aplayed. ");
         GameManager.Instance.playerUpgrades.aplayUpgrgade(upgradeSO);
+        GameManager.Instance.uiManager.hideUpgradeButtons();
     }
+
+    private void OnDisable()
+    {
+        foreach (var item in GetComponentsInChildren<StatFieldControler>())
+        {
+            Destroy(item.gameObject);
+        }
+        GetComponent<Button>().onClick.RemoveAllListeners();
+    }
+
 }
