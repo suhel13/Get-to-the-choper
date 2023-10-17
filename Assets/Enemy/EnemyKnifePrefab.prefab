@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1627827643642590285}
   - component: {fileID: 1627827643642590284}
   - component: {fileID: 1627827643642590283}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EnemyKnifePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,6 +167,7 @@ MonoBehaviour:
   activeWeppon: {fileID: 0}
   isAttacking: 0
   isPlayer: 0
+  pasiveWepponList: []
 --- !u!58 &1627827643642590284
 CircleCollider2D:
   m_ObjectHideFlags: 0

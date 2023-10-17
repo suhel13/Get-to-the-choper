@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class AreaAtack : MonoBehaviour, IOnHitEfect
 {
-    [SerializeField] float damage;
-    [SerializeField] float radius;
-    [SerializeField] float distance;
+    public float damage;
+    public float radius;
     [SerializeField] bool pushFallOff;
     [SerializeField] List<StatusSO> statusesSO = new List<StatusSO>();
-    List<Status> statuses = new List<Status>();
+    public List<Status> statuses = new List<Status>();
 
     HealthStatusManager tempHSMan;
     IPushAble tempPushAble;
@@ -28,14 +27,25 @@ public class AreaAtack : MonoBehaviour, IOnHitEfect
         {
             if (item.TryGetComponent(out tempHSMan))
             {
-                tempHSMan.takeDamage(damage);
+                if (tempHSMan.takeDamage(damage) == false)
+                    continue; //skip adding statuses if target is dead
+
                 foreach (Status status in statuses)
                 {
-                    if (pushFallOff)
+                    if (status is Push)
+                    {
+                        if (pushFallOff)
+                        {
 
-                        tempHSMan.addPush(status as Push, (item.transform.position - transform.position).normalized * Vector3.Distance(item.transform.position, transform.position) / radius * 0.5f);
+                            tempHSMan.addPush(status as Push, (item.transform.position - transform.position).normalized * Vector3.Distance(item.transform.position, transform.position) / radius * 0.5f);
+                        }
+                        else
+                        {
+                            tempHSMan.addPush(status as Push, (item.transform.position - transform.position).normalized);
+                        }
+                    }
                     else
-                        tempHSMan.addPush(status as Push, (item.transform.position - transform.position).normalized);
+                        tempHSMan.addStatus(status);
                 }
             }
             else if (item.TryGetComponent(out tempPushAble))

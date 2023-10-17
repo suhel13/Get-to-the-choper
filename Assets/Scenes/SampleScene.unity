@@ -365,7 +365,7 @@ GameObject:
   - component: {fileID: 56616325}
   - component: {fileID: 56616327}
   - component: {fileID: 56616326}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Xp Pickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2219,7 +2219,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2022821561}
   m_Father: {fileID: 1079025008}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2817,7 +2818,7 @@ GameObject:
   - component: {fileID: 1079025015}
   - component: {fileID: 1079025013}
   - component: {fileID: 1079025014}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2883,7 +2884,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1079025006}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5825,6 +5826,62 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f891423ff0d9b84fa53e098dcb10813, type: 3}
+--- !u!1 &2022821560
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2022821561}
+  - component: {fileID: 2022821562}
+  m_Layer: 0
+  m_Name: Trap Deployer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2022821561
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022821560}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 899533306}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2022821562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022821560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0abb93e8b1eebce4bae2fec0ae3076e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 20
+  fireRate: 0.1
+  stopedShooting: 0
+  statusesSO:
+  - {fileID: 11400000, guid: a52d18f13f93e7540b8240afe781e356, type: 2}
+  iconControler: {fileID: 0}
+  animator: {fileID: 0}
+  trapPrefab: {fileID: 2608515834332984526, guid: 8e54e297390e75b449df00213b458fa0, type: 3}
+  trapRange: 2
+  trapTrigerRange: 1
+  nimDeployRange: 1
+  maxDeployRange: 2
 --- !u!1 &2022965267
 GameObject:
   m_ObjectHideFlags: 0

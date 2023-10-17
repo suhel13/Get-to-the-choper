@@ -2,11 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PasiveWeppon : Weppon
+public abstract class PasiveWeppon : Weppon
 {
     public void Start()
     {
         base.Start();
         GetComponentInParent<WepponManager>().pasiveWepponList.Add(this);
     }
+    public override void attack()
+    {
+        if (fireRateTimer <= 0)
+        {
+            //.SetTrigger("Attack");
+            fireRateTimer = 1 / fireRate;
+            Effect();
+        }
+    }
+    public abstract void Effect();
+
 }

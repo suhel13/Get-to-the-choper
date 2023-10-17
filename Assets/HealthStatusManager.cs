@@ -58,11 +58,15 @@ public class HealthStatusManager : MonoBehaviour, IPushAble, IDamageAble
     }
 
 
-    public void takeDamage(float amount)
+    public bool takeDamage(float amount)
     {
         Hp -= amount;
         if (Hp <= 0)
+        {
             death();
+            return false;
+        }
+        else return true;
     }
     public void removeStatus(int id)
     {
