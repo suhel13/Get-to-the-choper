@@ -16,7 +16,7 @@ public class PlayerUpgrades : MonoBehaviour
 
     public List<Upgrade> avilableUpgrade;
     List<int> upgradeToPick = new List<int>();
-
+    bool upgradesPickActive = false;
     public float playerXp;
     public int level = 1;
     int upgradesCount;
@@ -30,6 +30,7 @@ public class PlayerUpgrades : MonoBehaviour
             level++;
             upgradesCount++;
         }
+        GameManager.Instance.uiManager.updateXpSlider();
     }
     public int getTotalXptoLevel(int level)
     {
@@ -46,7 +47,7 @@ public class PlayerUpgrades : MonoBehaviour
     }
     private void Update()
     {
-        if(GameManager.Instance.state == GameManager.gameState.play && upgradesCount>0)
+        if(GameManager.Instance.state == GameManager.gameState.play && upgradesCount>0 && upgradesPickActive == false)
         {
             generatePickUpgrade();
         }
@@ -57,6 +58,7 @@ public class PlayerUpgrades : MonoBehaviour
     }
     public void generatePickUpgrade()
     {
+        upgradesPickActive = true;
         upgradeToPick.Clear();
         int nextRandom;
         if (avilableUpgrade.Count > 3)
@@ -119,5 +121,6 @@ public class PlayerUpgrades : MonoBehaviour
         }
         GameManager.Instance.changeState(GameManager.gameState.play);
         upgradesCount--;
+        upgradesPickActive = false;
     }
 }

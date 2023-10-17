@@ -48,19 +48,15 @@ public class Character2dTopDownControler : MonoBehaviour
         else if (angleDiff < -180)
             angleDiff += 360;
 
-        Debug.Log(angleDiff, this.gameObject);
-
         if (angleDiff > 0)
         {
             if (rotateSpeed * Time.deltaTime < angleDiff)
             {
-                Debug.Log("1");
                 transform.Rotate(Vector3.forward, rotateSpeed * Time.deltaTime);
             }
                 //transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z + rotateSpeed * Time.deltaTime);
             else
             {
-                Debug.Log("2");
                 transform.Rotate(Vector3.forward, angleDiff);
             }
                 //transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z + angleDiff);
@@ -70,13 +66,11 @@ public class Character2dTopDownControler : MonoBehaviour
             if (rotateSpeed * Time.deltaTime < Mathf.Abs(angleDiff))
             {
 
-                Debug.Log("3");
                 transform.Rotate(Vector3.forward, - rotateSpeed * Time.deltaTime);
             }
                 //transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z + rotateSpeed * Time.deltaTime);
             else
             {
-                Debug.Log("4");
                 transform.Rotate(Vector3.forward, angleDiff);
             }
                 //transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z + angleDiff);

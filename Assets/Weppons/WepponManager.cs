@@ -12,6 +12,8 @@ public class WepponManager : MonoBehaviour
     PersonalUIControler personalUIControler;
     [SerializeField] bool isPlayer = false;
 
+    public List<PasiveWeppon> pasiveWepponList;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +57,11 @@ public class WepponManager : MonoBehaviour
             activeWeppon.startRelode(false);
         }
         updateGunsTimers(Time.deltaTime);
+        foreach (PasiveWeppon pasiveWeppon in pasiveWepponList)
+        {
+            pasiveWeppon.attack();
+            pasiveWeppon.updateGunsTimers(Time.deltaTime);
+        }
     }
     public void attack()
     {

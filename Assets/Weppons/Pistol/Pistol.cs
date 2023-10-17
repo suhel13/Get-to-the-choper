@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class Pistol : Gun
 {
-    private void Start()
-    {
-        base.Start();
-    }
-
     protected override void spawnBullets(float damage, float speed)
     {
         tempBulletGO = Instantiate(bulletPrefab, BarrelTransform.position, Quaternion.identity);

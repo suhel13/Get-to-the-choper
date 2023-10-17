@@ -26,6 +26,7 @@ public class Weppon : MonoBehaviour
         }
         animator = GetComponent<Animator>();
     }
+
     public virtual void attack()
     {
         if (fireRateTimer <= 0)
@@ -44,7 +45,6 @@ public class Weppon : MonoBehaviour
     {
 
     }
-
     public virtual void startRelode(bool forced)
     {
 

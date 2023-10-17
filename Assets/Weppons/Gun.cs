@@ -22,10 +22,6 @@ public abstract class Gun : Weppon
     protected GameObject tempBulletGO;
     [SerializeField] protected Transform BarrelTransform;
 
-    protected new void Start()
-    {
-        base.Start();
-    }
 
     public override void attack()
     {
