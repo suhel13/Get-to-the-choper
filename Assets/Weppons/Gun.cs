@@ -10,7 +10,7 @@ public abstract class Gun : Weppon
     protected float relodeTimer;
     protected bool isReloding;
 
-    public Slider relodeSlider;
+    [HideInInspector] public Slider relodeSlider;
 
     [SerializeField] protected int magSize;
     public int mag;
@@ -23,21 +23,23 @@ public abstract class Gun : Weppon
     [SerializeField] protected Transform BarrelTransform;
 
 
-    public override void attack()
+    public override void attack(Vector2 targetPos)
     {
         if (mag > 0 && isReloding == false)
         {
             if (fireRateTimer <= 0)
             {
-                animator.SetTrigger("Attack"); 
+                animator.SetTrigger("Attack");
                 mag -= 1;
                 fireRateTimer = 1 / fireRate;
                 //spawn projectail equal to pelets number
                 spawnBullets(damage, bulletSpeed);
-                if(iconControler != null)
+                if (iconControler != null)
                     iconControler.updateWepponIconAmmo(mag + " / " + magSize);
             }
+            else return;
         }
+        else return;
     }
 
     protected virtual void spawnBullets(float damage, float speed)

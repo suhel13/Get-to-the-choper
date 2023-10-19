@@ -26,8 +26,8 @@ public class Weppon : MonoBehaviour
         }
         animator = GetComponent<Animator>();
     }
-
-    public virtual void attack()
+    public virtual void attack() { }
+    public virtual void attack(Vector2 targetPos)
     {
         if (fireRateTimer <= 0)
         {
@@ -35,7 +35,6 @@ public class Weppon : MonoBehaviour
             fireRateTimer = 1 / fireRate;
         }
     }
-
     public virtual void updateGunsTimers(float delthaTime)
     {
         fireRateTimer -= delthaTime;

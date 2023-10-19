@@ -11,7 +11,7 @@ public class WepponManager : MonoBehaviour
     public bool isAttacking;
     PersonalUIControler personalUIControler;
     [SerializeField] bool isPlayer = false;
-
+    public Transform lookAtTarget;
     public List<PasiveWeppon> pasiveWepponList;
 
     // Start is called before the first frame update
@@ -23,7 +23,13 @@ public class WepponManager : MonoBehaviour
         Debug.Log(WepponList.Count);
         Debug.Log(WepponList[0]);
         Debug.Log(GameManager.Instance.uiManager.wepponIconControlers[0]);
-
+        for (int i = WepponList.Count - 1; i >= 0; i--)
+        {
+            if (WepponList[i] is PasiveWeppon)
+            {
+                WepponList.RemoveAt(i);
+            }
+        }
         for (int i = 0; i < WepponList.Count; i++)
         {
             Debug.Log(i);
@@ -65,7 +71,7 @@ public class WepponManager : MonoBehaviour
     }
     public void attack()
     {
-        activeWeppon.attack();
+        activeWeppon.attack(lookAtTarget.position);
     }
     public void swapWeppon(int id)
     {

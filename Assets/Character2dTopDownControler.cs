@@ -30,6 +30,7 @@ public class Character2dTopDownControler : MonoBehaviour
         lookAtTarget.transform.parent = transform.parent;
         wepponManager = GetComponent<WepponManager>();
         persControler = GetComponentInChildren<PersonalUIControler>();
+        GetComponent<WepponManager>().lookAtTarget = lookAtTarget;
     }
     private void Update()
     {

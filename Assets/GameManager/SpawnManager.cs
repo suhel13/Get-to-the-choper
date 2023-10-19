@@ -24,9 +24,9 @@ public class SpawnManager : MonoBehaviour
     private void OnDrawGizmos()
     {   
         Handles.color = Color.red;
-        Handles.DrawWireDisc(transform.position, Vector3.forward, innerSpawnRadius);
-        Handles.DrawWireDisc(transform.position, Vector3.forward, outerSpawnRadius);
-        Handles.DrawWireDisc(transform.position, Vector3.forward, (innerSpawnRadius + outerSpawnRadius) /2 );
+        Handles.DrawWireDisc(transform.position + GameManager.Instance.player.transform.position, Vector3.forward, innerSpawnRadius);
+        Handles.DrawWireDisc(transform.position + GameManager.Instance.player.transform.position, Vector3.forward, outerSpawnRadius);
+        Handles.DrawWireDisc(transform.position + GameManager.Instance.player.transform.position, Vector3.forward, (innerSpawnRadius + outerSpawnRadius) /2 );
     }
     // Start is called before the first frame update
     void Start()
