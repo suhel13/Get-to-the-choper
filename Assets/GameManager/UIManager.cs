@@ -14,9 +14,9 @@ public class UIManager : MonoBehaviour
 
     public void updateXpSlider()
     {
-        xpSlider.maxValue = GameManager.Instance.playerUpgrades.getXpToLevel(GameManager.Instance.playerUpgrades.level);
+        xpSlider.maxValue = GameManager.Instance.playerUpgrades.GetXpToLevel(GameManager.Instance.playerUpgrades.level);
         xpSlider.value = GameManager.Instance.playerUpgrades.playerXp;
-        xpAMountText.text = "" + GameManager.Instance.playerUpgrades.playerXp + "/" + GameManager.Instance.playerUpgrades.getXpToLevel(GameManager.Instance.playerUpgrades.level);
+        xpAMountText.text = "" + GameManager.Instance.playerUpgrades.playerXp + "/" + GameManager.Instance.playerUpgrades.GetXpToLevel(GameManager.Instance.playerUpgrades.level);
     }
 
     public void setUpgredeButton(int id, Upgrade upgradeSO)

@@ -21,7 +21,7 @@ public class AreaAtack : MonoBehaviour, IOnHitEfect
         }
     }
 
-    public void resorveEffect()
+    public void ResorveEffect()
     {
         foreach (var item in Physics2D.OverlapCircleAll(transform.position, radius))
         {

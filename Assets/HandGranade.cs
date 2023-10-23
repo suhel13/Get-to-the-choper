@@ -6,10 +6,19 @@ using UnityEngine;
 public class HandGranade : Gun
 {
     public float maxRange;
-    [SerializeField] float explosionRadius;
+    float explosionRadius;
+    [SerializeField] float baseExplosionRadius;
     [SerializeField] [Range(1,2f)] float maxScale;
     GranadeProjectail granade;
-    public override void attack(Vector2 targetPos)
+    void PlayerUpgrades_RangeUpgraded() { explosionRadius = baseExplosionRadius * (1 + GameManager.Instance.playerUpgrades.rangeBonus); }
+    private void Start()
+    {
+        base.Start();
+        GameManager.Instance.playerUpgrades.RangeUpgraded += PlayerUpgrades_RangeUpgraded;
+        explosionRadius = baseExplosionRadius * (1 + GameManager.Instance.playerUpgrades.rangeBonus);
+    }
+
+    public override void Attack(Vector2 targetPos)
     {
         if (mag > 0 && isReloding == false)
         {
@@ -17,9 +26,9 @@ public class HandGranade : Gun
             {
                 animator.SetTrigger("Attack");
                 mag -= 1;
-                fireRateTimer = 1 / fireRate;
+                fireRateTimer = 1 / baseFireRate;
                 //spawn projectail equal to pelets number
-                spawnBullets(damage, bulletSpeed, targetPos);
+                SpawnBullets(baseDamage, bulletSpeed, targetPos);
                 if (iconControler != null)
                     iconControler.updateWepponIconAmmo(mag + " / " + magSize);
             }
@@ -28,11 +37,11 @@ public class HandGranade : Gun
         else return;
     }
 
-    protected void spawnBullets(float damage, float speed, Vector2 targetPos)
+    protected void SpawnBullets(float damage, float speed, Vector2 targetPos)
     {
         tempBulletGO = Instantiate(bulletPrefab, BarrelTransform.position, Quaternion.identity);
         granade = tempBulletGO.GetComponent<GranadeProjectail>();
         Vector2 velocity = (BarrelTransform.position - transform.position).normalized * speed;
-        granade.setParameters(damage, explosionRadius, targetPos, velocity, statuses, maxScale);
+        granade.SetParameters(damage, explosionRadius, targetPos, velocity, statuses, maxScale);
     }
 }

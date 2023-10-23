@@ -15,7 +15,7 @@ MonoBehaviour:
   name: 5
   duration: 1
   tick: 0.1
-  damage: 0.1
+  damage: 0.2
   slow: -0.1
   chainCount: 1
   chainRange: 2

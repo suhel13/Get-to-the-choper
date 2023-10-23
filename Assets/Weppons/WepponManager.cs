@@ -60,23 +60,23 @@ public class WepponManager : MonoBehaviour
         }
         else
         {
-            activeWeppon.startRelode(false);
+            activeWeppon.StartRelode(false);
         }
         updateGunsTimers(Time.deltaTime);
         foreach (PasiveWeppon pasiveWeppon in pasiveWepponList)
         {
             pasiveWeppon.attack();
-            pasiveWeppon.updateGunsTimers(Time.deltaTime);
+            pasiveWeppon.UpdateGunsTimers(Time.deltaTime);
         }
     }
     public void attack()
     {
-        activeWeppon.attack(lookAtTarget.position);
+        activeWeppon.Attack(lookAtTarget.position);
     }
     public void swapWeppon(int id)
     {
         activeWeppon.iconControler.ActiveWepponIcon.SetActive(false);
-        activeWeppon.cancelRelode();
+        activeWeppon.CancelRelode();
         if(WepponList.Count > id) 
         {
             activeWeppon = WepponList[id];
@@ -84,7 +84,7 @@ public class WepponManager : MonoBehaviour
 
             if(activeWeppon is Gun)
             {
-                activeWeppon.startRelode(false);
+                activeWeppon.StartRelode(false);
             }
         }
     }
@@ -93,9 +93,9 @@ public class WepponManager : MonoBehaviour
     {
         foreach (Weppon weppon in WepponList)
         {
-            weppon.updateGunsTimers(delthaTime);
+            weppon.UpdateGunsTimers(delthaTime);
         }
         if(activeWeppon is Gun)
-            activeWeppon.updateGunRelodeTimer(delthaTime);
+            activeWeppon.UpdateGunRelodeTimer(delthaTime);
     }
 }

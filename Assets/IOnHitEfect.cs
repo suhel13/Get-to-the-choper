@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IOnHitEfect
 {
-    public void resorveEffect();
+    public void ResorveEffect();
 }

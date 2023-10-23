@@ -5,19 +5,19 @@ using UnityEngine.UIElements;
 
 public class XpPickup : MonoBehaviour
 {
+
     private void Start()
     {
-        pickUpRange = 1;
-    }
-    [SerializeField] public float pickUpRange
-    {
-        get { return pickUpRange; }
-        set
-        {
-            GetComponent<CircleCollider2D>().radius = value;
-        }
+        GameManager.Instance.playerUpgrades.PickUpRangeUpgraded += PlayerUpgrades_PickUpRangeUpgraded;
+        basePickUpRange = 1;
+        pickUpRange = basePickUpRange * (1 + GameManager.Instance.playerUpgrades.pickUpRangeBonus);
     }
 
+    private void PlayerUpgrades_PickUpRangeUpgraded() { pickUpRange = basePickUpRange * (1 + GameManager.Instance.playerUpgrades.pickUpRangeBonus); }
+
+    float pickUpRange;
+    [SerializeField] float basePickUpRange;
+   
     IPickAble temp;
     private void OnTriggerEnter2D(Collider2D collision)
     {

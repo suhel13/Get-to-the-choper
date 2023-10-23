@@ -704,7 +704,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1541519121}
   m_Father: {fileID: 1079025008}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -720,25 +721,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2560e729ec9e05b4892a84ace7f82e02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
-  fireRate: 1
+  baseDamage: 0
+  baseFireRate: 0
   stopedShooting: 0
   statusesSO: []
   iconControler: {fileID: 0}
   animator: {fileID: 0}
-  relodeTime: 1
+  baseRelodeTime: 0
   relodeSlider: {fileID: 0}
   magSize: 1
   mag: 1
   bulletLifeTime: Infinity
-  bulletSpeed: 2
+  baseBulletSpeed: 3
   multiShoot: 1
   pelets: 1
   bulletPrefab: {fileID: 4257979095722916089, guid: bf6454ad5a789c348a8873ea626438c3, type: 3}
   BarrelTransform: {fileID: 1541519121}
   maxRange: 5
-  explosionRadius: 1.5
-  maxScale: 1.5
+  baseExplosionRadius: 1.5
+  maxScale: 1.33
 --- !u!95 &148084293
 Animator:
   serializedVersion: 5
@@ -2387,18 +2388,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 271151c2169b9ab43b842ede66072db5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
-  fireRate: 2
+  baseDamage: 0
+  baseFireRate: 0
   stopedShooting: 0
   statusesSO: []
   iconControler: {fileID: 0}
   animator: {fileID: 0}
-  relodeTime: 2
+  baseRelodeTime: 0
   relodeSlider: {fileID: 0}
   magSize: 6
   mag: 6
   bulletLifeTime: 0
-  bulletSpeed: 10
+  baseBulletSpeed: 0
   multiShoot: 1
   pelets: 1
   bulletPrefab: {fileID: 3375962933119144305, guid: 49779f312be8b584bb13e90038368ab4, type: 3}
@@ -2983,7 +2984,6 @@ Transform:
   - {fileID: 56616325}
   - {fileID: 148084291}
   - {fileID: 899533306}
-  - {fileID: 1541519121}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4473,8 +4473,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1079025008}
-  m_RootOrder: 8
+  m_Father: {fileID: 148084291}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1546678873
 GameObject:
@@ -4590,8 +4590,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3316574837226423394, guid: 04cbc2f9b7e643d42b60d2b5ffc8406d, type: 3}
+      propertyPath: baseDamage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3316574837226423394, guid: 04cbc2f9b7e643d42b60d2b5ffc8406d, type: 3}
       propertyPath: relodeTime
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3316574837226423394, guid: 04cbc2f9b7e643d42b60d2b5ffc8406d, type: 3}
+      propertyPath: baseFireRate
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3316574837226423394, guid: 04cbc2f9b7e643d42b60d2b5ffc8406d, type: 3}
+      propertyPath: baseRelodeTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3316574837226423394, guid: 04cbc2f9b7e643d42b60d2b5ffc8406d, type: 3}
+      propertyPath: baseBulletSpeed
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3316574837226423394, guid: 04cbc2f9b7e643d42b60d2b5ffc8406d, type: 3}
       propertyPath: statusesSO.Array.size
@@ -4663,6 +4679,8 @@ MonoBehaviour:
   statusDurationBonus: 0
   statusDamageBonus: 0
   movementSpeedBonus: 0
+  rangeBonus: 0
+  bulletSpeedBonus: 0
   avilableUpgrade: []
   playerXp: 0
   level: 1
@@ -4906,18 +4924,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 271151c2169b9ab43b842ede66072db5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
-  fireRate: 2
+  baseDamage: 0
+  baseFireRate: 0
   stopedShooting: 0
   statusesSO: []
   iconControler: {fileID: 0}
   animator: {fileID: 0}
-  relodeTime: 2
+  baseRelodeTime: 0
   relodeSlider: {fileID: 0}
   magSize: 6
   mag: 6
   bulletLifeTime: 0
-  bulletSpeed: 10
+  baseBulletSpeed: 0
   multiShoot: 1
   pelets: 1
   bulletPrefab: {fileID: 3375962933119144305, guid: 49779f312be8b584bb13e90038368ab4, type: 3}
@@ -5616,12 +5634,28 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3316574837226423394, guid: 04cbc2f9b7e643d42b60d2b5ffc8406d, type: 3}
+      propertyPath: baseDamage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3316574837226423394, guid: 04cbc2f9b7e643d42b60d2b5ffc8406d, type: 3}
       propertyPath: relodeTime
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3316574837226423394, guid: 04cbc2f9b7e643d42b60d2b5ffc8406d, type: 3}
       propertyPath: bulletSpeed
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3316574837226423394, guid: 04cbc2f9b7e643d42b60d2b5ffc8406d, type: 3}
+      propertyPath: baseFireRate
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3316574837226423394, guid: 04cbc2f9b7e643d42b60d2b5ffc8406d, type: 3}
+      propertyPath: baseRelodeTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3316574837226423394, guid: 04cbc2f9b7e643d42b60d2b5ffc8406d, type: 3}
+      propertyPath: baseBulletSpeed
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3316574837226423394, guid: 04cbc2f9b7e643d42b60d2b5ffc8406d, type: 3}
       propertyPath: statusesSO.Array.size
@@ -5991,18 +6025,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0abb93e8b1eebce4bae2fec0ae3076e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
-  fireRate: 0.1
+  baseDamage: 0
+  baseFireRate: 0
   stopedShooting: 0
   statusesSO:
   - {fileID: 11400000, guid: a52d18f13f93e7540b8240afe781e356, type: 2}
   iconControler: {fileID: 0}
   animator: {fileID: 0}
   trapPrefab: {fileID: 2608515834332984526, guid: 8e54e297390e75b449df00213b458fa0, type: 3}
-  trapRange: 1.5
+  baseTrapRange: 0
   trapTrigerRange: 0.5
-  nimDeployRange: 1
-  maxDeployRange: 2
+  baseMinDeployRange: 0
+  baseMaxDeployRange: 0
 --- !u!1 &2022965267
 GameObject:
   m_ObjectHideFlags: 0
@@ -6861,12 +6895,28 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3316574837226423394, guid: 04cbc2f9b7e643d42b60d2b5ffc8406d, type: 3}
+      propertyPath: baseDamage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3316574837226423394, guid: 04cbc2f9b7e643d42b60d2b5ffc8406d, type: 3}
       propertyPath: relodeTime
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3316574837226423394, guid: 04cbc2f9b7e643d42b60d2b5ffc8406d, type: 3}
       propertyPath: bulletSpeed
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3316574837226423394, guid: 04cbc2f9b7e643d42b60d2b5ffc8406d, type: 3}
+      propertyPath: baseFireRate
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3316574837226423394, guid: 04cbc2f9b7e643d42b60d2b5ffc8406d, type: 3}
+      propertyPath: baseRelodeTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3316574837226423394, guid: 04cbc2f9b7e643d42b60d2b5ffc8406d, type: 3}
+      propertyPath: baseBulletSpeed
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3316574837226423394, guid: 04cbc2f9b7e643d42b60d2b5ffc8406d, type: 3}
       propertyPath: statusesSO.Array.size
@@ -6888,6 +6938,10 @@ PrefabInstance:
     - target: {fileID: 4257979095722916089, guid: bf6454ad5a789c348a8873ea626438c3, type: 3}
       propertyPath: m_Name
       value: Granade
+      objectReference: {fileID: 0}
+    - target: {fileID: 4257979095722916089, guid: bf6454ad5a789c348a8873ea626438c3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4257979095722916092, guid: bf6454ad5a789c348a8873ea626438c3, type: 3}
       propertyPath: m_RootOrder

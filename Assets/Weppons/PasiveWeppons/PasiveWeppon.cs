@@ -14,10 +14,9 @@ public abstract class PasiveWeppon : Weppon
         if (fireRateTimer <= 0)
         {
             //.SetTrigger("Attack");
-            fireRateTimer = 1 / fireRate;
+            fireRateTimer = 1 / baseFireRate;
             Effect();
         }
     }
     public abstract void Effect();
-
 }

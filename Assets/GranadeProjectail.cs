@@ -8,14 +8,14 @@ using UnityEngine;
 public class GranadeProjectail : MonoBehaviour
 {
     AreaAtack areaAtack;
-    Rigidbody2D rb;
+    Rigidbody2D rb2D;
     Vector2 targetPos;
     Vector2 startPos;
     float distance;
     float normDist;
     float maxScale;
 
-    public void setParameters(float damage, float radius, Vector2 targetPos, Vector2 velocity, List<Status> statuses, float maxScale)
+    public void SetParameters(float damage, float radius, Vector2 targetPos, Vector2 velocity, List<Status> statuses, float maxScale)
     {
         areaAtack.damage = damage;
         areaAtack.radius = radius;
@@ -26,29 +26,31 @@ public class GranadeProjectail : MonoBehaviour
         {
             areaAtack.statuses.Add(status);
         }
-        GetComponent<Rigidbody2D>().velocity = velocity;
+        rb2D.velocity = velocity;
         Debug.Log("granade Velocity: " + velocity, gameObject);
     }
     private void Awake()
     {
         areaAtack = GetComponent<AreaAtack>();
         startPos = transform.position;
+        rb2D = GetComponent<Rigidbody2D>();
     }
     private void Update()
     {
-        setSize();
-        if ( Vector3.Dot(rb.velocity,new Vector3 ( targetPos.x, targetPos.y) - transform.position ) > Mathf.PI/2)
-            explode();
+        SetSize();
+
+        if ( Mathf.Acos( Vector3.Dot(rb2D.velocity,new Vector3 ( targetPos.x, targetPos.y) - transform.position )) > Mathf.PI/2)
+            Explode();
     }
-    void explode()
+    void Explode()
     {
         foreach(IOnHitEfect effect in GetComponents<IOnHitEfect>())
         {
-            effect.resorveEffect();
+            effect.ResorveEffect();
         }
         Destroy(gameObject);
     }
-    void setSize()
+    void SetSize()
     {
         normDist = Vector2.Distance(transform.position, targetPos) / distance;
         if(normDist >= 0.5f)

@@ -8,7 +8,7 @@ public class XpParticle : MonoBehaviour, IPickAble
     public void pickUp()
     {
 
-        GameManager.Instance.playerUpgrades.addXp(xpAmount);
+        GameManager.Instance.playerUpgrades.AddXp(xpAmount);
         Destroy(gameObject);
     }
 }

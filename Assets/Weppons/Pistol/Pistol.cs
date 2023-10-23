@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pistol : Gun
 {
-    protected override void spawnBullets(float damage, float speed)
+    protected override void SpawnBullets(float damage, float speed)
     {
         tempBulletGO = Instantiate(bulletPrefab, BarrelTransform.position, Quaternion.identity);
         tempBulletGO.GetComponent<Rigidbody2D>().velocity = (BarrelTransform.position - this.transform.position).normalized * speed;

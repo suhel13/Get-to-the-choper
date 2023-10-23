@@ -34,7 +34,7 @@ public class Trap : MonoBehaviour
     {
         foreach(IOnHitEfect onHitEfect in GetComponents<IOnHitEfect>())
         {
-            onHitEfect.resorveEffect();
+            onHitEfect.ResorveEffect();
         }
         Destroy(gameObject);
     }

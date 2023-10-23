@@ -35,7 +35,7 @@ public class UpgradeButtonControler : MonoBehaviour
     public void aplayUpgrade()
     {
         Debug.Log(upgradeSO.upgradeName + " aplayed. ");
-        GameManager.Instance.playerUpgrades.aplayUpgrgade(upgradeSO);
+        GameManager.Instance.playerUpgrades.AplayUpgrgade(upgradeSO);
         GameManager.Instance.uiManager.hideUpgradeButtons();
     }
 

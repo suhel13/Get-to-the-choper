@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public abstract class Gun : Weppon
 {
 
-    [SerializeField] protected float relodeTime;
+    [SerializeField] protected float baseRelodeTime;
+    protected float relodeTime;
     protected float relodeTimer;
     protected bool isReloding;
 
@@ -15,15 +16,26 @@ public abstract class Gun : Weppon
     [SerializeField] protected int magSize;
     public int mag;
     [SerializeField] protected float bulletLifeTime;
-    [SerializeField] protected float bulletSpeed;
+    [SerializeField] protected float baseBulletSpeed;
+    protected float bulletSpeed;
     [SerializeField] protected float multiShoot;
     [SerializeField] protected float pelets;
     [SerializeField] protected GameObject bulletPrefab;
     protected GameObject tempBulletGO;
     [SerializeField] protected Transform BarrelTransform;
 
+    void PlayerUpgrades_RelodeUpgraded() { relodeTime = baseRelodeTime / (1 + GameManager.Instance.playerUpgrades.relodeSpeedBonus); }
+    void PlayerUpgrades_BulletSpeedUpgraded() { bulletSpeed = baseBulletSpeed * (1 + GameManager.Instance.playerUpgrades.bulletSpeedBonus); }
+    private void Start()
+    {
+        base.Start();
+        GameManager.Instance.playerUpgrades.RelodeUpgraded += PlayerUpgrades_RelodeUpgraded;
+        GameManager.Instance.playerUpgrades.BulletSpeedUpgraded += PlayerUpgrades_BulletSpeedUpgraded;
+        relodeTime = baseRelodeTime / (1 + GameManager.Instance.playerUpgrades.relodeSpeedBonus);
+        bulletSpeed = baseBulletSpeed * (1 + GameManager.Instance.playerUpgrades.bulletSpeedBonus);
+    }
 
-    public override void attack(Vector2 targetPos)
+    public override void Attack(Vector2 targetPos)
     {
         if (mag > 0 && isReloding == false)
         {
@@ -33,7 +45,7 @@ public abstract class Gun : Weppon
                 mag -= 1;
                 fireRateTimer = 1 / fireRate;
                 //spawn projectail equal to pelets number
-                spawnBullets(damage, bulletSpeed);
+                SpawnBullets(damage, bulletSpeed);
                 if (iconControler != null)
                     iconControler.updateWepponIconAmmo(mag + " / " + magSize);
             }
@@ -42,24 +54,24 @@ public abstract class Gun : Weppon
         else return;
     }
 
-    protected virtual void spawnBullets(float damage, float speed)
+    protected virtual void SpawnBullets(float damage, float speed)
     {
 
     }
-    public override void updateGunsTimers(float delthaTime)
+    public override void UpdateGunsTimers(float delthaTime)
     {
         fireRateTimer -= delthaTime;
     }
-    public override void updateGunRelodeTimer(float delthaTime)
+    public override void UpdateGunRelodeTimer(float delthaTime)
     {
         relodeTimer -= delthaTime;
         relodeSlider.value = relodeTimer / relodeTime;
         if (isReloding && relodeTimer <= 0)
         {
-            endRelode();
+            EndRelode();
         }
     }
-    public override void startRelode(bool forced)
+    public override void StartRelode(bool forced)
     {
         if (isReloding == false)
         {
@@ -77,13 +89,13 @@ public abstract class Gun : Weppon
             }
         }
     }
-    public override void cancelRelode()
+    public override void CancelRelode()
     {
         relodeSlider.gameObject.SetActive(false);
         isReloding = false;
         relodeTimer = relodeTime;
     }
-    protected override void endRelode()
+    protected override void EndRelode()
     {
         relodeSlider.gameObject.SetActive(false);
         isReloding = false;

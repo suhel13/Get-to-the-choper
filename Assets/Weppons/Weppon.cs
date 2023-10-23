@@ -6,8 +6,10 @@ using UnityEngine;
 public class Weppon : MonoBehaviour
 {
 
-    [SerializeField] protected float damage;
-    [SerializeField] protected float fireRate;
+    [SerializeField] protected float baseDamage;
+    protected float damage;
+    [SerializeField] protected float baseFireRate;
+    protected float fireRate;
     protected float fireRateTimer;
     [HideInInspector] public bool stopedShooting;
 
@@ -17,42 +19,50 @@ public class Weppon : MonoBehaviour
     [HideInInspector] public WepponIconControler iconControler;
     [HideInInspector] public Animator animator;
 
+    void PlayerUpgrades_WepponDamageUpgraded() { damage = baseDamage * (1 + GameManager.Instance.playerUpgrades.wepponDamageBonus); }
+    void PlayerUpgrades_FireRateUpgraded() { fireRate = baseFireRate * (1 + GameManager.Instance.playerUpgrades.fireRateBonus); }
+
     protected void Start()
     {
+        GameManager.Instance.playerUpgrades.WepponDamageUpgraded += PlayerUpgrades_WepponDamageUpgraded;
+        GameManager.Instance.playerUpgrades.FireRateUpgraded += PlayerUpgrades_FireRateUpgraded;
         foreach (var statSO in statusesSO)
         {
             Debug.Log(statSO.name);
             statuses.Add(statSO.createObject());
         }
         animator = GetComponent<Animator>();
+        damage = baseDamage * (1 + GameManager.Instance.playerUpgrades.wepponDamageBonus);
+        fireRate = baseFireRate * (1 + GameManager.Instance.playerUpgrades.fireRateBonus);
     }
+
     public virtual void attack() { }
-    public virtual void attack(Vector2 targetPos)
+    public virtual void Attack(Vector2 targetPos)
     {
         if (fireRateTimer <= 0)
         {
             animator.SetTrigger("Attack"); 
-            fireRateTimer = 1 / fireRate;
+            fireRateTimer = 1 / baseFireRate;
         }
     }
-    public virtual void updateGunsTimers(float delthaTime)
+    public virtual void UpdateGunsTimers(float delthaTime)
     {
         fireRateTimer -= delthaTime;
     }
 
-    public virtual void updateGunRelodeTimer(float delthaTime)
+    public virtual void UpdateGunRelodeTimer(float delthaTime)
     {
 
     }
-    public virtual void startRelode(bool forced)
+    public virtual void StartRelode(bool forced)
     {
 
     }
-    public virtual void cancelRelode()
+    public virtual void CancelRelode()
     {
 
     }
-    protected virtual void endRelode()
+    protected virtual void EndRelode()
     {
 
     }

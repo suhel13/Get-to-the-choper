@@ -1,29 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class Shock : Status 
 {
     float damage;
+    float baseDamage;
     float slow;
 
     int chainCount;
     float chainRange;
+    float baseChainRange;
     List<HealthStatusManager> pastChainTargets;
-
-    public Shock(float duration, float tick, float damage, float slow) : base(duration, tick)
-    {
-        this.damage = damage;
-        this.slow = slow;
-        name = statusName.Shock;
+    void applayStatusDamageUpgrade() { damage = baseDamage * (1 + GameManager.Instance.playerUpgrades.statusDamageBonus);
+        Debug.Log("base damage: " + baseDamage + "bonus damage: " + damage);
     }
+    void applayRangeUpgrade() { chainRange = baseChainRange * (1 + GameManager.Instance.playerUpgrades.rangeBonus);  }
+
     public Shock(Shock Shock, bool newId) : base(Shock, newId)
     {
+        baseDamage = Shock.baseDamage;
         damage = Shock.damage;
         slow = Shock.slow;
         chainCount = Shock.chainCount;
+        baseChainRange = Shock.baseChainRange;
         chainRange = Shock.chainRange;
         pastChainTargets = new List<HealthStatusManager>(Shock.pastChainTargets);
         name = statusName.Shock;
@@ -37,12 +37,16 @@ public class Shock : Status
 
     public Shock(ShockSO ShockSO) : base(ShockSO.duration, ShockSO.tick)
     {
-        this.damage = ShockSO.damage;
-        this.slow = ShockSO.slow;
+        GameManager.Instance.playerUpgrades.StatusDamageUpgraded += applayStatusDamageUpgrade;
+        GameManager.Instance.playerUpgrades.RangeUpgraded += applayRangeUpgrade;
+        baseDamage = ShockSO.damage;
+        damage = baseDamage * (1 + GameManager.Instance.playerUpgrades.statusDamageBonus);
+        slow = ShockSO.slow;
         chainCount = ShockSO.chainCount;
-        chainRange = ShockSO.chainRange;
+        baseChainRange = ShockSO.chainRange;
+        chainRange = baseChainRange * (1 + GameManager.Instance.playerUpgrades.rangeBonus);
         pastChainTargets = new List<HealthStatusManager>();
-        this.name = statusName.Shock;
+        name = statusName.Shock;
     }
 
     public override void startEfect(HealthStatusManager HSman)

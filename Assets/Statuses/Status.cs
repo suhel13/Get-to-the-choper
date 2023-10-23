@@ -9,6 +9,7 @@ public abstract class Status
     public statusName name;
     public int id;
     protected float duration;
+    protected float baseDuration;
     protected float timer;
     protected float tick;
     protected float tickTimer;
@@ -18,34 +19,44 @@ public abstract class Status
     protected bool returnVal;
     protected List<int> statusesToRemove = new List<int>();
     protected List<Status> statusesToAdd = new List<Status>();
-
-
-    public Status(float duration, float tick)
-    {
-        id = GameManager.Instance.nextStatusId();
-        this.duration = duration;
-        if (this.duration <= 0)
-            this.duration = 0.01f;
-        this.tick = tick;
-        this.timer = 0;
-        this.tickTimer = 0;
-        this.isStartEfectResolved = false;
+    void PlayerUpgrades_StatusDurationUpgraded() { duration = baseDuration * (1 + GameManager.Instance.playerUpgrades.statusDurationBonus);
+        Debug.Log("base duration: " + baseDuration + " bonus duration: " + duration);
     }
+
+    public Status(float baseDuration, float tick)
+    {
+        //Used for creaating Statuses from scriptable Objects
+        GameManager.Instance.playerUpgrades.StatusDurationUpgraded += PlayerUpgrades_StatusDurationUpgraded; 
+
+        id = GameManager.Instance.nextStatusId();
+        this.baseDuration = baseDuration;
+        duration = baseDuration * (1 + GameManager.Instance.playerUpgrades.statusDurationBonus);
+
+        this.tick = tick;
+        if (this.tick <= 0)
+            this.tick = duration;
+        timer = 0;
+        tickTimer = 0;
+        isStartEfectResolved = false;
+    }
+
     public Status(Status status, bool newID)
     {
+        // used for creating copy of status
         if (newID)
-            this.id = GameManager.Instance.nextStatusId();
+            id = GameManager.Instance.nextStatusId();
         else
-            this.id = status.id;
+            id = status.id;
 
-        this.duration = status.duration;
-        if (this.duration <= 0)
-            this.duration = 0.01f;
-        this.tick = status.tick;
+        baseDuration = status.baseDuration;
+        duration = status.duration;
+        tick = status.tick;
+        if (tick <= 0)
+            tick = 0.01f;
 
-        this.timer = 0;
-        this.tickTimer = 0;
-        this.isStartEfectResolved = false;
+        timer = 0;
+        tickTimer = 0;
+        isStartEfectResolved = false;
     }
     public virtual Status copy()
     {
