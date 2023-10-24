@@ -7,9 +7,11 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Character2dTopDownControler : MonoBehaviour
 {
+    public bool isPlayer;
     public bool isAlive;
     public bool canMove;
-    [SerializeField] float speed;
+    [SerializeField] float baseSpeed;
+    float speed;
     public bool canRotate;
     [SerializeField] float rotateSpeed;
     public float speedModifire = 1;
@@ -23,23 +25,32 @@ public class Character2dTopDownControler : MonoBehaviour
 
     PersonalUIControler persControler;
 
+    private void PlayerUpgrades_MovementSpeedUpgraded() { speed = baseSpeed * (1 + GameManager.Instance.playerUpgrades.movementSpeedBonus); }
+
     // Start is called before the first frame update
     void Start()
     {
+        if (isPlayer)
+        {
+            GameManager.Instance.playerUpgrades.MovementSpeedUpgraded += PlayerUpgrades_MovementSpeedUpgraded;
+            speed = baseSpeed * (1 + GameManager.Instance.playerUpgrades.movementSpeedBonus);
+        }
+        else
+            speed = baseSpeed;
+
         rb2D = GetComponent<Rigidbody2D>();
         lookAtTarget.transform.parent = transform.parent;
         wepponManager = GetComponent<WepponManager>();
         persControler = GetComponentInChildren<PersonalUIControler>();
         GetComponent<WepponManager>().lookAtTarget = lookAtTarget;
     }
+
     private void Update()
     {
         if (canRotate)
             rotate();
         else
             canRotate = true;
-
-        persControler.fixedToParetn.updatePosAndRot();
     }
     void rotate()
     {

@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Acid : Status
 {
+    float baseDamage;
     float damage;
     float armorReduction;
     float bleedDamageMultiplayer;
+    private void PlayerUpgrades_StatusDamageUpgraded() { damage = baseDamage * (1 + GameManager.Instance.playerUpgrades.statusDamageBonus); }
 
     public Acid(Acid acid, bool newID) : base(acid, newID)
     {
+        baseDamage = acid.baseDamage;
         damage = acid.damage;
         armorReduction = acid.armorReduction;
         bleedDamageMultiplayer = acid.bleedDamageMultiplayer;
@@ -22,11 +25,14 @@ public class Acid : Status
 
     public Acid(AcidSO acidSO) : base(acidSO.duration, acidSO.tick)
     {
-        this.damage = acidSO.damage;
-        this.armorReduction = acidSO.armorReduction;
+        GameManager.Instance.playerUpgrades.StatusDamageUpgraded += PlayerUpgrades_StatusDamageUpgraded;
+        baseDamage = acidSO.damage;
+        damage = baseDamage * (1 + GameManager.Instance.playerUpgrades.statusDamageBonus);
+        armorReduction = acidSO.armorReduction;
         bleedDamageMultiplayer = acidSO.bleedDamageMultiplayer;
-        this.name = statusName.Acid;
+        name = statusName.Acid;
     }
+
 
     public override void normalEffect(HealthStatusManager HSman)
     {

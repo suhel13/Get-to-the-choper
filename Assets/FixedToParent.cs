@@ -15,9 +15,13 @@ public class FixedToParent : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void updatePosAndRot()
+    void updatePosAndRot()
     {
         transform.position = parent.position + posOffSet;
         transform.rotation = startRotation;
+    }
+    private void LateUpdate()
+    {
+        updatePosAndRot();
     }
 }

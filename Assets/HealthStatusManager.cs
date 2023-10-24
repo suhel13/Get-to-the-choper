@@ -4,15 +4,33 @@ using UnityEngine;
 
 public class HealthStatusManager : MonoBehaviour, IPushAble, IDamageAble
 {
+    public bool isPlayer;
     public float Hp;
-    public float maxHp;
+    [SerializeField] float baseMaxHp;
+    float maxHp;
+    
     public Dictionary<int, Status> Statuses = new Dictionary<int, Status>();
     List<int> statusesToRemove = new List<int>();
     PersonalUIControler personalUIControler;
     public int xpAmount;
+    DamageNumberCanvasControler damageNumberCanvasControler;
+
+    void PlayerUpgrades_HpUpgraded() { maxHp = baseMaxHp * (1 + GameManager.Instance.playerUpgrades.statusDurationBonus); }
     // Start is called before the first frame update
     void Start()
     {
+        damageNumberCanvasControler = GetComponentInChildren<DamageNumberCanvasControler>();
+        if (isPlayer)
+        {
+            GameManager.Instance.playerUpgrades.HpUpgraded += PlayerUpgrades_HpUpgraded;
+            maxHp = baseMaxHp * (1 + GameManager.Instance.playerUpgrades.statusDurationBonus);
+            Hp = maxHp;
+        }
+        else
+        {
+            maxHp = baseMaxHp;
+            Hp = maxHp;
+        }
         personalUIControler = GetComponentInChildren<PersonalUIControler>();
     }
 
@@ -56,6 +74,10 @@ public class HealthStatusManager : MonoBehaviour, IPushAble, IDamageAble
     public bool takeDamage(float amount)
     {
         Hp -= amount;
+
+        if(damageNumberCanvasControler)
+            damageNumberCanvasControler.SpawnDamageNumber(amount);
+
         if (Hp <= 0)
         {
             death();

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -20,6 +21,26 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        float testflaot = 1241;
+        string testString;
+        var watch = new System.Diagnostics.Stopwatch();
+        watch.Start();
+        for (int i = 0; i < 1000000; i++)
+        {
+            testString = testflaot.ToString();
+        }
+        watch.Stop();
+        Debug.Log($"Execution Time float.ToString(): {watch.ElapsedMilliseconds} ms");
+
+        var watch2 = new System.Diagnostics.Stopwatch();
+        watch2.Start();
+        for (int i = 0; i < 1000000; i++)
+        {
+            testString = "" + testflaot;
+        }
+        watch2.Stop();
+        Debug.Log($"Execution Time : \"\"+ float {watch2.ElapsedMilliseconds} ms");
+
         if (Instance != null && Instance != this)
         {
             Destroy(this);

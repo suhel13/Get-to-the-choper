@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class Incinirate : Status
 {
+    float baseDamage;
     float damage;
+    float baseBleedDamage;
     float bleedDamage;
+    void PlayerUpgrades_StatusDamageUpgraded() 
+    { 
+        damage = baseDamage * (1 + GameManager.Instance.playerUpgrades.statusDamageBonus);
+        bleedDamage = baseBleedDamage * (1 + GameManager.Instance.playerUpgrades.statusDamageBonus);
+    }
     public Incinirate(Incinirate incinirate, bool newID) : base(incinirate, newID)
     {
+        baseDamage = incinirate.baseDamage;
         damage = incinirate.damage;
+        baseBleedDamage = incinirate.baseBleedDamage;
         bleedDamage = incinirate.bleedDamage;
         name = statusName.Insinirate;
     }
@@ -19,8 +28,11 @@ public class Incinirate : Status
 
     public Incinirate(IncinirateSO incinirateSO) : base(incinirateSO.duration, incinirateSO.tick)
     {
-        damage = incinirateSO.damage;
-        this.bleedDamage = incinirateSO.bleedDamage;
+        GameManager.Instance.playerUpgrades.StatusDamageUpgraded += PlayerUpgrades_StatusDamageUpgraded;
+        baseDamage = incinirateSO.damage;
+        damage = baseDamage * (1 + GameManager.Instance.playerUpgrades.statusDamageBonus);
+        baseBleedDamage = incinirateSO.bleedDamage;
+        bleedDamage = baseBleedDamage * (1 + GameManager.Instance.playerUpgrades.statusDamageBonus);
         this.name = statusName.Insinirate;
     }
 

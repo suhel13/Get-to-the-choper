@@ -12,10 +12,8 @@ public class Shock : Status
     float chainRange;
     float baseChainRange;
     List<HealthStatusManager> pastChainTargets;
-    void applayStatusDamageUpgrade() { damage = baseDamage * (1 + GameManager.Instance.playerUpgrades.statusDamageBonus);
-        Debug.Log("base damage: " + baseDamage + "bonus damage: " + damage);
-    }
-    void applayRangeUpgrade() { chainRange = baseChainRange * (1 + GameManager.Instance.playerUpgrades.rangeBonus);  }
+    void PlayerUpgrades_StatusDamageUpgraded() { damage = baseDamage * (1 + GameManager.Instance.playerUpgrades.statusDamageBonus); }
+    void PlayerUpgrades_RangeUpgraded() { chainRange = baseChainRange * (1 + GameManager.Instance.playerUpgrades.rangeBonus); }
 
     public Shock(Shock Shock, bool newId) : base(Shock, newId)
     {
@@ -37,8 +35,8 @@ public class Shock : Status
 
     public Shock(ShockSO ShockSO) : base(ShockSO.duration, ShockSO.tick)
     {
-        GameManager.Instance.playerUpgrades.StatusDamageUpgraded += applayStatusDamageUpgrade;
-        GameManager.Instance.playerUpgrades.RangeUpgraded += applayRangeUpgrade;
+        GameManager.Instance.playerUpgrades.StatusDamageUpgraded += PlayerUpgrades_StatusDamageUpgraded;
+        GameManager.Instance.playerUpgrades.RangeUpgraded += PlayerUpgrades_RangeUpgraded;
         baseDamage = ShockSO.damage;
         damage = baseDamage * (1 + GameManager.Instance.playerUpgrades.statusDamageBonus);
         slow = ShockSO.slow;

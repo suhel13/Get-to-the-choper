@@ -415,6 +415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1b5eb073abc0834f9403b9fb34ef49e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  basePickUpRange: 0
 --- !u!1001 &57298439
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -545,7 +546,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6840d46a619806145a473bafeae0098e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 0
   Hp: 20
+  baseMaxHp: 0
   maxHp: 20
   xpAmount: 0
 --- !u!114 &143978680
@@ -560,9 +563,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 997784aaa58b2fd4cba786cc4a34c879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 0
   isAlive: 1
   canMove: 0
-  speed: 0
+  baseSpeed: 0
   canRotate: 0
   rotateSpeed: 90
   speedModifire: 1
@@ -2999,9 +3003,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 997784aaa58b2fd4cba786cc4a34c879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 1
   isAlive: 0
   canMove: 0
-  speed: 5
+  baseSpeed: 5
   canRotate: 0
   rotateSpeed: 720
   speedModifire: 1
@@ -3085,7 +3090,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6840d46a619806145a473bafeae0098e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 0
   Hp: 100
+  baseMaxHp: 100
   maxHp: 100
   xpAmount: 0
 --- !u!114 &1079025014
@@ -3689,7 +3696,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6840d46a619806145a473bafeae0098e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 0
   Hp: 20
+  baseMaxHp: 0
   maxHp: 20
   xpAmount: 0
 --- !u!114 &1237628463
@@ -3704,9 +3713,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 997784aaa58b2fd4cba786cc4a34c879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 0
   isAlive: 1
   canMove: 0
-  speed: 0
+  baseSpeed: 0
   canRotate: 0
   rotateSpeed: 90
   speedModifire: 1
@@ -4681,6 +4691,7 @@ MonoBehaviour:
   movementSpeedBonus: 0
   rangeBonus: 0
   bulletSpeedBonus: 0
+  pickUpRangeBonus: 0
   avilableUpgrade: []
   playerXp: 0
   level: 1
@@ -6721,6 +6732,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1079025008}
     m_Modifications:
+    - target: {fileID: 6791322584389116124, guid: 645b7da96e64e0e47bb7c95e3f128179, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 6791322584389116128, guid: 645b7da96e64e0e47bb7c95e3f128179, type: 3}
       propertyPath: m_Name
       value: Personal UI Info Canvas

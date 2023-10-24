@@ -6,13 +6,12 @@ using UnityEngine;
 public class Bleed : Status
 {
     float damage;
-    public Bleed(float duration, float tick, float damage): base(duration, tick)
-    {
-        this.damage = damage;
-        name = statusName.Bleed;
-    }
+    float baseDamage;
+    void PlayerUpgrades_StatusDamageUpgraded() { damage = baseDamage * (1 + GameManager.Instance.playerUpgrades.statusDamageBonus); }
+
     public Bleed(Bleed bleed, bool newId): base(bleed, newId)
     {
+        baseDamage = bleed.baseDamage;
         damage = bleed.damage;
         name = statusName.Bleed;
     }
@@ -24,7 +23,9 @@ public class Bleed : Status
 
     public Bleed(BleedSO bleedSO) : base(bleedSO.duration, bleedSO.tick)
     {
-        this.damage = bleedSO.damage;
+        this.baseDamage = bleedSO.damage;
+        damage = baseDamage * (1 + GameManager.Instance.playerUpgrades.statusDamageBonus); 
+        GameManager.Instance.playerUpgrades.StatusDamageUpgraded += PlayerUpgrades_StatusDamageUpgraded;
         this.name = statusName.Bleed;
     }
     public override void normalEffect(HealthStatusManager HSman)
