@@ -22,17 +22,18 @@ public abstract class Gun : Weppon
     [SerializeField] protected float pelets;
     [SerializeField] protected GameObject bulletPrefab;
     protected GameObject tempBulletGO;
-    [SerializeField] protected Transform BarrelTransform;
+    [SerializeField] protected Transform bulletSpawnPoint;
 
     void PlayerUpgrades_RelodeUpgraded() { relodeTime = baseRelodeTime / (1 + GameManager.Instance.playerUpgrades.relodeSpeedBonus); }
     void PlayerUpgrades_BulletSpeedUpgraded() { bulletSpeed = baseBulletSpeed * (1 + GameManager.Instance.playerUpgrades.bulletSpeedBonus); }
-    private void Start()
+    protected new void Start()
     {
         base.Start();
         GameManager.Instance.playerUpgrades.RelodeUpgraded += PlayerUpgrades_RelodeUpgraded;
         GameManager.Instance.playerUpgrades.BulletSpeedUpgraded += PlayerUpgrades_BulletSpeedUpgraded;
         relodeTime = baseRelodeTime / (1 + GameManager.Instance.playerUpgrades.relodeSpeedBonus);
         bulletSpeed = baseBulletSpeed * (1 + GameManager.Instance.playerUpgrades.bulletSpeedBonus);
+        Debug.Log("Gun Start");
     }
 
     public override void Attack(Vector2 targetPos)

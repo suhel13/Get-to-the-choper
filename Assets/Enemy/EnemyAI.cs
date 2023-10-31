@@ -45,7 +45,7 @@ public class EnemyAI : MonoBehaviour
             switch (type)
             {
                 case EnemyType.mele:
-                    _wepponManager.activeWeppon.attack();
+                    _wepponManager.activeWeppon.Attack();
                     break;
 
                 case EnemyType.range:

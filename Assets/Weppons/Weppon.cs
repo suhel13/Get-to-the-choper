@@ -34,9 +34,10 @@ public class Weppon : MonoBehaviour
         animator = GetComponent<Animator>();
         damage = baseDamage * (1 + GameManager.Instance.playerUpgrades.wepponDamageBonus);
         fireRate = baseFireRate * (1 + GameManager.Instance.playerUpgrades.fireRateBonus);
+        Debug.Log("Weppon Start");
     }
 
-    public virtual void attack() { }
+    public virtual void Attack() { Attack(Vector2.zero); }
     public virtual void Attack(Vector2 targetPos)
     {
         if (fireRateTimer <= 0)

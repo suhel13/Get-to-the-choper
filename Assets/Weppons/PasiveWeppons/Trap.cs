@@ -7,22 +7,34 @@ using UnityEngine;
 public class Trap : MonoBehaviour
 {
     AreaAtack areaAtack;
-
+    float lifeTime;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        active();
+        Active();
     }
-    public void setParameters( float damage, float radius, float trigerRadius, List<Status> statuses)
+
+    private void Update()
+    {
+        if(lifeTime> 0)
+        {
+            lifeTime -= Time.deltaTime;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    public void setParameters( float damage, float radius, float trigerRadius, List<Status> statuses, float lifeTime)
     {
         areaAtack = GetComponent<AreaAtack>();
         areaAtack.damage = damage;
         areaAtack.radius = radius;
+        this.lifeTime = lifeTime;
         GetComponent<CircleCollider2D>().radius = trigerRadius;
         foreach(Status status in statuses)
         {
             areaAtack.statuses.Add(status);
         }
-
     }
     private void OnDrawGizmos()
     {
@@ -30,7 +42,7 @@ public class Trap : MonoBehaviour
         Handles.DrawWireDisc(transform.position, Vector3.forward, areaAtack.radius);
     }
 
-    void active()
+    void Active()
     {
         foreach(IOnHitEfect onHitEfect in GetComponents<IOnHitEfect>())
         {

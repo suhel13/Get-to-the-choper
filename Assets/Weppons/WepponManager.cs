@@ -65,7 +65,7 @@ public class WepponManager : MonoBehaviour
         updateGunsTimers(Time.deltaTime);
         foreach (PasiveWeppon pasiveWeppon in pasiveWepponList)
         {
-            pasiveWeppon.attack();
+            pasiveWeppon.Attack();
             pasiveWeppon.UpdateGunsTimers(Time.deltaTime);
         }
     }

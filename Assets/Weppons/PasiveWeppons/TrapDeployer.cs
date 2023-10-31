@@ -15,16 +15,18 @@ public class TrapDeployer : PasiveWeppon
     float minDeployRange;
     float maxDeployRange;
 
-    private void Start()
+    [SerializeField] float baseTrapLifeTime;
+    void PlayerUpgrades_RangeUpgraded()
     {
-        base.Start();
-        GameManager.Instance.playerUpgrades.RangeUpgraded += applayRangeUpgrade;
         trapRange = baseTrapRange * (1 + GameManager.Instance.playerUpgrades.rangeBonus);
         minDeployRange = baseMinDeployRange * (1 + GameManager.Instance.playerUpgrades.rangeBonus);
         maxDeployRange = baseMaxDeployRange * (1 + GameManager.Instance.playerUpgrades.rangeBonus);
     }
-    void applayRangeUpgrade()
+
+    protected new void Start()
     {
+        base.Start();
+        GameManager.Instance.playerUpgrades.RangeUpgraded += PlayerUpgrades_RangeUpgraded;
         trapRange = baseTrapRange * (1 + GameManager.Instance.playerUpgrades.rangeBonus);
         minDeployRange = baseMinDeployRange * (1 + GameManager.Instance.playerUpgrades.rangeBonus);
         maxDeployRange = baseMaxDeployRange * (1 + GameManager.Instance.playerUpgrades.rangeBonus);
@@ -34,6 +36,6 @@ public class TrapDeployer : PasiveWeppon
         float radius = Random.Range(minDeployRange, maxDeployRange);
         float angle = Random.Range(0f, 2 * Mathf.PI);
         Vector2 trapPos = new Vector2(radius * Mathf.Cos(angle), radius * Mathf.Sin(angle));
-        Instantiate(trapPrefab, trapPos + new Vector2(transform.position.x, transform.position.y), Quaternion.identity).GetComponent<Trap>().setParameters(baseDamage, trapRange, trapTrigerRange, statuses);
+        Instantiate(trapPrefab, trapPos + new Vector2(transform.position.x, transform.position.y), Quaternion.identity).GetComponent<Trap>().setParameters(baseDamage, trapRange, trapTrigerRange, statuses, baseTrapLifeTime);
     }
 }

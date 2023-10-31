@@ -37,15 +37,15 @@ public class AreaAtack : MonoBehaviour, IOnHitEfect
                         if (pushFallOff)
                         {
 
-                            tempHSMan.addPush(status as Push, (item.transform.position - transform.position).normalized * Vector3.Distance(item.transform.position, transform.position) / radius * 0.5f);
+                            tempHSMan.addPush(status.copy() as Push, (item.transform.position - transform.position).normalized * Vector3.Distance(item.transform.position, transform.position) / radius * 0.5f);
                         }
                         else
                         {
-                            tempHSMan.addPush(status as Push, (item.transform.position - transform.position).normalized);
+                            tempHSMan.addPush(status.copy() as Push, (item.transform.position - transform.position).normalized);
                         }
                     }
                     else
-                        tempHSMan.addStatus(status);
+                        tempHSMan.addStatus(status.copy());
                 }
             }
             else if (item.TryGetComponent(out tempPushAble))
@@ -55,9 +55,9 @@ public class AreaAtack : MonoBehaviour, IOnHitEfect
                     if (status is Push)
                     {
                         if (pushFallOff)
-                            tempPushAble.addPush(status as Push, (item.transform.position - transform.position).normalized * Vector3.Distance(item.transform.position, transform.position) / radius * 0.5f);
+                            tempPushAble.addPush(status.copy() as Push, (item.transform.position - transform.position).normalized * Vector3.Distance(item.transform.position, transform.position) / radius * 0.5f);
                         else
-                            tempPushAble.addPush(status as Push, (item.transform.position - transform.position).normalized);
+                            tempPushAble.addPush(status.copy() as Push, (item.transform.position - transform.position).normalized);
                     }
                 }
             }

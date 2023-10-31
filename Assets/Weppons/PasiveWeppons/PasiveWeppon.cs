@@ -4,12 +4,12 @@ using UnityEngine;
 
 public abstract class PasiveWeppon : Weppon
 {
-    public void Start()
+    protected new void Start()
     {
         base.Start();
         GetComponentInParent<WepponManager>().pasiveWepponList.Add(this);
     }
-    public override void attack()
+    public override void Attack()
     {
         if (fireRateTimer <= 0)
         {
