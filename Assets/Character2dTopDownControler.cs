@@ -11,7 +11,7 @@ public class Character2dTopDownControler : MonoBehaviour
     public bool isAlive;
     public bool canMove;
     [SerializeField] float baseSpeed;
-    float speed;
+    [HideInInspector] public float speed;
     public bool canRotate;
     [SerializeField] float rotateSpeed;
     public float speedModifire = 1;
@@ -19,7 +19,7 @@ public class Character2dTopDownControler : MonoBehaviour
     public List<Vector2> enviromentSpeedVector = new List<Vector2>();
     public Vector2 movementVector;
     public Transform lookAtTarget;
-
+    public TMPro.TextMeshProUGUI ammoCounterText;
     public WepponManager wepponManager;
     Rigidbody2D rb2D;
 
@@ -34,6 +34,7 @@ public class Character2dTopDownControler : MonoBehaviour
         {
             GameManager.Instance.playerUpgrades.MovementSpeedUpgraded += PlayerUpgrades_MovementSpeedUpgraded;
             speed = baseSpeed * (1 + GameManager.Instance.playerUpgrades.movementSpeedBonus);
+            ammoCounterText = lookAtTarget.GetComponentInChildren<TMPro.TextMeshProUGUI>();
         }
         else
             speed = baseSpeed;
@@ -121,5 +122,4 @@ public class Character2dTopDownControler : MonoBehaviour
         }
        enviromentSpeedVector.Clear();
     }
-
 }

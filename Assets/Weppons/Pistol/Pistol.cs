@@ -8,7 +8,7 @@ public class Pistol : Gun
     {
         tempBulletGO = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
         tempBulletGO.GetComponent<Rigidbody2D>().velocity = (bulletSpawnPoint.position - this.transform.position).normalized * speed;
-        tempBulletGO.GetComponent<Bullet>().setParameters(this.gameObject, damage, bulletLifeTime);
+        tempBulletGO.GetComponent<Bullet>().setParameters(this.gameObject, damage, pierce, bulletLifeTime);
         foreach (var status in statuses)
         {
             tempBulletGO.GetComponent<Bullet>().addStatus(status.copy());

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public abstract class Gun : Weppon
 {
-
     [SerializeField] protected float baseRelodeTime;
     protected float relodeTime;
     protected float relodeTimer;
@@ -20,17 +19,23 @@ public abstract class Gun : Weppon
     protected float bulletSpeed;
     [SerializeField] protected float multiShoot;
     [SerializeField] protected float pelets;
+    [SerializeField] protected float basePierce;
+    protected float pierce;
     [SerializeField] protected GameObject bulletPrefab;
     protected GameObject tempBulletGO;
     [SerializeField] protected Transform bulletSpawnPoint;
 
-    void PlayerUpgrades_RelodeUpgraded() { relodeTime = baseRelodeTime / (1 + GameManager.Instance.playerUpgrades.relodeSpeedBonus); }
-    void PlayerUpgrades_BulletSpeedUpgraded() { bulletSpeed = baseBulletSpeed * (1 + GameManager.Instance.playerUpgrades.bulletSpeedBonus); }
+    public TMPro.TextMeshProUGUI ammoCounterText;
+
+    protected void PlayerUpgrades_RelodeUpgraded() { relodeTime = baseRelodeTime / (1 + GameManager.Instance.playerUpgrades.relodeSpeedBonus); }
+    protected void PlayerUpgrades_BulletSpeedUpgraded() { bulletSpeed = baseBulletSpeed * (1 + GameManager.Instance.playerUpgrades.bulletSpeedBonus); }
+    protected void PlayerUpgrades_PierceUpgraded() { pierce = basePierce  + GameManager.Instance.playerUpgrades.pierceBonus; }
     protected new void Start()
     {
         base.Start();
         GameManager.Instance.playerUpgrades.RelodeUpgraded += PlayerUpgrades_RelodeUpgraded;
         GameManager.Instance.playerUpgrades.BulletSpeedUpgraded += PlayerUpgrades_BulletSpeedUpgraded;
+        GameManager.Instance.playerUpgrades.PierceUpgraded += PlayerUpgrades_PierceUpgraded;
         relodeTime = baseRelodeTime / (1 + GameManager.Instance.playerUpgrades.relodeSpeedBonus);
         bulletSpeed = baseBulletSpeed * (1 + GameManager.Instance.playerUpgrades.bulletSpeedBonus);
         Debug.Log("Gun Start");
@@ -49,10 +54,16 @@ public abstract class Gun : Weppon
                 SpawnBullets(damage, bulletSpeed);
                 if (iconControler != null)
                     iconControler.updateWepponIconAmmo(mag + " / " + magSize);
+                UpdateAmmoCounterText();
             }
             else return;
         }
         else return;
+    }
+    public void UpdateAmmoCounterText()
+    {
+        if (ammoCounterText != null)
+            ammoCounterText.text = mag.ToString();
     }
 
     protected virtual void SpawnBullets(float damage, float speed)
@@ -98,11 +109,14 @@ public abstract class Gun : Weppon
     }
     protected override void EndRelode()
     {
+        Debug.Log("Gun end relode");
         relodeSlider.gameObject.SetActive(false);
         isReloding = false;
+        ammoCounterText.text = mag.ToString();
         mag = magSize;
         fireRateTimer = 0;
         if (iconControler != null)
             iconControler.updateWepponIconAmmo(mag + " / " + magSize);
+        UpdateAmmoCounterText();
     }
 }

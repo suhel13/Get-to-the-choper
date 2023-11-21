@@ -5,7 +5,6 @@ using UnityEngine.UIElements;
 
 public class XpPickup : MonoBehaviour
 {
-
     private void Start()
     {
         GameManager.Instance.playerUpgrades.PickUpRangeUpgraded += PlayerUpgrades_PickUpRangeUpgraded;
@@ -23,7 +22,14 @@ public class XpPickup : MonoBehaviour
     {
         if(collision.gameObject.TryGetComponent<IPickAble>(out temp))
         {
-            temp.pickUp();
+            temp.StartPickUp();
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.TryGetComponent<IPickAble>(out temp))
+        {
+            temp.PickUp();
         }
     }
 }

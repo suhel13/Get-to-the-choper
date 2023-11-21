@@ -75,6 +75,7 @@ public class PlayerInputControler : MonoBehaviour
     void onAimActionPerf(InputAction.CallbackContext ctx)
     {
         _characterControler.lookAtTarget.position = mainCam.ScreenToWorldPoint(ctx.ReadValue<Vector2>());
+        _characterControler.lookAtTarget.position = new Vector3(_characterControler.lookAtTarget.position.x, _characterControler.lookAtTarget.position.y, 0);
     }
 
     void onShootActionPerf(InputAction.CallbackContext ctx)
@@ -93,6 +94,6 @@ public class PlayerInputControler : MonoBehaviour
 
     void onNumberActionPerf(InputAction.CallbackContext ctx, int id)
     {
-        _wepponManager.swapWeppon(id);
+        _wepponManager.SwapWeppon(id);
     }
 }

@@ -11,6 +11,7 @@ public class PlayerUpgrades : MonoBehaviour
     public float relodeSpeedBonus;
     public float fireRateBonus;
     public float wepponDamageBonus;
+    public float pierceBonus;
     public float statusDurationBonus;
     public float statusDamageBonus;
     public float movementSpeedBonus;
@@ -137,6 +138,10 @@ public class PlayerUpgrades : MonoBehaviour
                     pickUpRangeBonus += upgradeSO.upgrades[i] / 100;
                     OnPickUpRangeUpgraded();
                     break;
+                case statType.pierce:
+                    pierceBonus += upgradeSO.upgrades[i];
+                    OnPierceUpgraded();
+                    break;
                 default:
                     Debug.LogWarning("this upgrade is not implemented " + Upgrade.getUpgradeName(upgradeSO.statTypeToUpgrades[i]));
                     break;
@@ -176,6 +181,9 @@ public class PlayerUpgrades : MonoBehaviour
     void OnBulletSpeedUpgraded() {  BulletSpeedUpgraded?.Invoke(); }
 
     public event Notify PickUpRangeUpgraded;
-    void OnPickUpRangeUpgraded() { PickUpRangeUpgraded?.Invoke(); }
+    void OnPickUpRangeUpgraded() { PickUpRangeUpgraded?.Invoke(); }    
+    
+    public event Notify PierceUpgraded;
+    void OnPierceUpgraded() { PickUpRangeUpgraded?.Invoke(); }
 
 }

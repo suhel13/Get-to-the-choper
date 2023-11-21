@@ -7,7 +7,7 @@ public class Upgrade : ScriptableObject
 {
     public Sprite icon;
     public string upgradeName;
-    public enum statType {maxHp, relodeSpeed, fireRate, wepponDamage, statusDuration, statusDamage, movementSpeed, range, bulletSpeed, pickUpRange}
+    public enum statType {maxHp, relodeSpeed, fireRate, wepponDamage, statusDuration, statusDamage, movementSpeed, range, bulletSpeed, pickUpRange, pierce}
     public List<statType> statTypeToUpgrades = new List<statType>();   
     public List<float> upgrades = new List<float>();
 
@@ -35,6 +35,8 @@ public class Upgrade : ScriptableObject
                 return "Bullet Speed";
             case statType.pickUpRange:
                 return "Pick up range";
+            case statType.pierce:
+                return "Pierce";
             default:
                 return "Not implemented";
         }

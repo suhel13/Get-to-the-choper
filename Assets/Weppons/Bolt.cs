@@ -2,22 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bolt : MonoBehaviour
 {
     float damage;
     float lifeTime;
     float timer;
     float pierce;
     bool pierceOnKill;
+    float baseSpeed;
+    Rigidbody2D rb2D;
     List<Status> statuses = new List<Status>();
     GameObject owner;
 
-    public void setParameters(GameObject owner, float damage,float pierce ,float lifeTime)
-    { 
+    public void setParameters(GameObject owner, float damage, float pierce, float lifeTime, float baseSpeed)
+    {
         this.owner = owner;
         this.damage = damage;
         this.pierce = pierce;
         this.lifeTime = lifeTime;
+        this.baseSpeed = baseSpeed;
+        rb2D = GetComponent<Rigidbody2D>();
     }
 
     public void addStatus(Status status)
@@ -25,7 +29,7 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
-        if(timer >= lifeTime)
+        if (timer >= lifeTime)
         {
             Destroy(this.gameObject);
         }
@@ -53,9 +57,10 @@ public class Bullet : MonoBehaviour
                     target.addStatus(status.copy());
             }
         }
-        if (pierce < 1)
+        rb2D.velocity -= rb2D.velocity.normalized * 1f / 3f * baseSpeed;
+        if(rb2D.velocity.magnitude < 0.1f)
+        {
             Destroy(this.gameObject);
-        else
-            pierce -= 1;
+        }
     }
 }

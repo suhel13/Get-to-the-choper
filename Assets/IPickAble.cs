@@ -4,5 +4,7 @@ using UnityEngine;
 
 public interface IPickAble 
 {
-    public void pickUp();
+    public void PickUp();
+    public void StartPickUp();
+
 }

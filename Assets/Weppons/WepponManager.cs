@@ -12,12 +12,14 @@ public class WepponManager : MonoBehaviour
     PersonalUIControler personalUIControler;
     [SerializeField] bool isPlayer = false;
     public Transform lookAtTarget;
+    public TMPro.TextMeshProUGUI ammoCounterText;
     public List<PasiveWeppon> pasiveWepponList;
 
     // Start is called before the first frame update
     void Start()
     {
         personalUIControler = GetComponentInChildren<PersonalUIControler>();
+        ammoCounterText = lookAtTarget.GetComponentInChildren<TMPro.TextMeshProUGUI>();
         WepponList = GetComponentsInChildren<Weppon>(true).ToList<Weppon>();
         activeWeppon = WepponList[0];
         Debug.Log(WepponList.Count);
@@ -36,6 +38,10 @@ public class WepponManager : MonoBehaviour
             if (WepponList[i] is Gun)
             {
                 (WepponList[i] as Gun).relodeSlider = personalUIControler.relodeSlider;
+                if (ammoCounterText != null)
+                {
+                    (WepponList[i] as Gun).ammoCounterText = ammoCounterText;
+                }
             }
             Debug.Log(GameManager.Instance.uiManager.wepponIconControlers[i]);
 
@@ -56,24 +62,24 @@ public class WepponManager : MonoBehaviour
     {
         if (isAttacking)
         {
-            attack();
+            Attack();
         }
         else
         {
             activeWeppon.StartRelode(false);
         }
-        updateGunsTimers(Time.deltaTime);
+        UpdateGunsTimers(Time.deltaTime);
         foreach (PasiveWeppon pasiveWeppon in pasiveWepponList)
         {
             pasiveWeppon.Attack();
             pasiveWeppon.UpdateGunsTimers(Time.deltaTime);
         }
     }
-    public void attack()
+    public void Attack()
     {
         activeWeppon.Attack(lookAtTarget.position);
     }
-    public void swapWeppon(int id)
+    public void SwapWeppon(int id)
     {
         activeWeppon.iconControler.ActiveWepponIcon.SetActive(false);
         activeWeppon.CancelRelode();
@@ -85,11 +91,12 @@ public class WepponManager : MonoBehaviour
             if(activeWeppon is Gun)
             {
                 activeWeppon.StartRelode(false);
+                (activeWeppon as Gun).UpdateAmmoCounterText();
             }
         }
     }
 
-    public void updateGunsTimers(float delthaTime)
+    public void UpdateGunsTimers(float delthaTime)
     {
         foreach (Weppon weppon in WepponList)
         {
