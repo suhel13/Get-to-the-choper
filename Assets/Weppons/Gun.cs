@@ -47,13 +47,15 @@ public abstract class Gun : Weppon
         {
             if (fireRateTimer <= 0)
             {
+                Debug.Log("gun attqack");
+                animator.ResetTrigger("Relode");
+                animator.ResetTrigger("EndRelode");
                 animator.SetTrigger("Attack");
                 mag -= 1;
                 fireRateTimer = 1 / fireRate;
                 //spawn projectail equal to pelets number
                 SpawnBullets(damage, bulletSpeed);
-                if (iconControler != null)
-                    iconControler.updateWepponIconAmmo(mag + " / " + magSize);
+                UpdateGunIconInfo();
                 UpdateAmmoCounterText();
             }
             else return;
@@ -64,6 +66,11 @@ public abstract class Gun : Weppon
     {
         if (ammoCounterText != null)
             ammoCounterText.text = mag.ToString();
+    }
+    public void UpdateGunIconInfo()
+    {
+        if (iconControler != null)
+            iconControler.updateWepponIconAmmo(mag + " / " + magSize);
     }
 
     protected virtual void SpawnBullets(float damage, float speed)
@@ -76,25 +83,37 @@ public abstract class Gun : Weppon
     }
     public override void UpdateGunRelodeTimer(float delthaTime)
     {
+        if (isReloding == false)
+            return;
+
         relodeTimer -= delthaTime;
         relodeSlider.value = relodeTimer / relodeTime;
+        Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
+        animator.speed = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / relodeTime;
+
         if (isReloding && relodeTimer <= 0)
         {
             EndRelode();
         }
     }
+
     public override void StartRelode(bool forced)
     {
         if (isReloding == false)
         {
+
             if (forced)
             {
+                Debug.Log("gun start relode");
+                animator.SetTrigger("Relode");
                 relodeSlider.gameObject.SetActive(true);
                 isReloding = true;
                 relodeTimer = relodeTime;
             }
             else if (mag == 0)
             {
+                Debug.Log("gun start relode");
+                animator.SetTrigger("Relode");
                 relodeSlider.gameObject.SetActive(true);
                 isReloding = true;
                 relodeTimer = relodeTime;
@@ -103,6 +122,9 @@ public abstract class Gun : Weppon
     }
     public override void CancelRelode()
     {
+        animator.ResetTrigger("EndRelode");
+        animator.ResetTrigger("Relode");
+        animator.SetTrigger("CancelRelode");
         relodeSlider.gameObject.SetActive(false);
         isReloding = false;
         relodeTimer = relodeTime;
@@ -110,13 +132,16 @@ public abstract class Gun : Weppon
     protected override void EndRelode()
     {
         Debug.Log("Gun end relode");
+        animator.ResetTrigger("Relode");
+        animator.ResetTrigger("Attack");
+        animator.SetTrigger("EndRelode");
+        animator.speed = 1;
         relodeSlider.gameObject.SetActive(false);
         isReloding = false;
         ammoCounterText.text = mag.ToString();
         mag = magSize;
         fireRateTimer = 0;
-        if (iconControler != null)
-            iconControler.updateWepponIconAmmo(mag + " / " + magSize);
+        UpdateGunIconInfo();
         UpdateAmmoCounterText();
     }
 }

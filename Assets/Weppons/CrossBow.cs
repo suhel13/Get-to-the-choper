@@ -24,7 +24,7 @@ public class CrossBow : Gun
     {
         tempBulletGO = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
         tempBulletGO.GetComponent<Rigidbody2D>().velocity = (bulletSpawnPoint.position - this.transform.position).normalized * speed;
-        tempBulletGO.GetComponent<Bolt>().setParameters(this.gameObject, damage, pierce, bulletLifeTime, baseBulletSpeed);
+        tempBulletGO.GetComponent<Bolt>().setParameters(this.gameObject, damage, pierce, bulletLifeTime, speed, baseBulletSpeed);
         foreach (var status in statuses)
         {
             tempBulletGO.GetComponent<Bullet>().addStatus(status.copy());

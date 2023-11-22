@@ -43,18 +43,19 @@ public class WepponManager : MonoBehaviour
                     (WepponList[i] as Gun).ammoCounterText = ammoCounterText;
                 }
             }
-            Debug.Log(GameManager.Instance.uiManager.wepponIconControlers[i]);
 
             if (isPlayer)
             {
+                Debug.Log(GameManager.Instance.uiManager.wepponIconControlers[i]);
                 WepponList[i].iconControler = GameManager.Instance.uiManager.wepponIconControlers[i];
+                (WepponList[i] as Gun).UpdateGunIconInfo();
+                WepponList[i].gameObject.SetActive(false);
             }
         } 
         if(isPlayer)
         {
-            WepponList[0].iconControler.ActiveWepponIcon.SetActive(true);
+            SwapWeppon(0);
         }
-
         personalUIControler.relodeSlider.gameObject.SetActive(false);
     }
 
@@ -83,11 +84,12 @@ public class WepponManager : MonoBehaviour
     {
         activeWeppon.iconControler.ActiveWepponIcon.SetActive(false);
         activeWeppon.CancelRelode();
+        activeWeppon.gameObject.SetActive(false);
         if(WepponList.Count > id) 
         {
             activeWeppon = WepponList[id];
             activeWeppon.iconControler.ActiveWepponIcon.SetActive(true);
-
+            activeWeppon.gameObject.SetActive(true);
             if(activeWeppon is Gun)
             {
                 activeWeppon.StartRelode(false);

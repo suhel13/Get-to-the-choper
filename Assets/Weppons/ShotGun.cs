@@ -33,6 +33,8 @@ public class ShotGun : Gun
         {
             mag += 1;
             relodeTimer = relodeTime;
+            animator.SetTrigger("Relode");
+            animator.SetTrigger("EndRelode");
         }
         else
         {
@@ -40,6 +42,7 @@ public class ShotGun : Gun
             isReloding = false;
             mag = magSize;
             fireRateTimer = 0;
+            animator.SetTrigger("EndRelode");
         }
         if (iconControler != null)
         {

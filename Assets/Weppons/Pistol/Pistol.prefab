@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0.45350313, b: 0.6226415, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -114,8 +114,10 @@ MonoBehaviour:
   baseBulletSpeed: 10
   multiShoot: 1
   pelets: 1
+  basePierce: 0
   bulletPrefab: {fileID: 3375962933119144305, guid: 49779f312be8b584bb13e90038368ab4, type: 3}
-  bulletSpawnPoint: {fileID: 0}
+  bulletSpawnPoint: {fileID: 3316574838792301261}
+  ammoCounterText: {fileID: 0}
 --- !u!95 &1866990875
 Animator:
   serializedVersion: 5
@@ -126,7 +128,7 @@ Animator:
   m_GameObject: {fileID: 3316574837226423407}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: be15a1779717c4a479755fed0955dab1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
