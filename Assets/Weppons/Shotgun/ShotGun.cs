@@ -5,13 +5,15 @@ using UnityEngine;
 public class ShotGun : Gun
 {
     [SerializeField] float pelletsdAngle;
+    [SerializeField] float velocityVariation;
+    [SerializeField] float angleVariation;
     protected override void SpawnBullets(float damage, float speed)
     {
         for (int i = 0; i < pelets; i++)
         {
 
             tempBulletGO = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
-            tempBulletGO.GetComponent<Rigidbody2D>().velocity = (bulletSpawnPoint.position - this.transform.position).RotateVectorByAxisZ(pelletsdAngle * i / (pelets - 1) - pelletsdAngle / 2).normalized * speed;
+            tempBulletGO.GetComponent<Rigidbody2D>().velocity = (bulletSpawnPoint.position - this.transform.position).RotateVectorByAxisZ(pelletsdAngle * Random.Range(1 - angleVariation, 1 + angleVariation) * i / (pelets - 1) - pelletsdAngle / 2).normalized * speed * Random.Range(1 - velocityVariation, 1 + velocityVariation);
             tempBulletGO.GetComponent<Bullet>().setParameters(this.gameObject, damage, pierce, bulletLifeTime);
             foreach (var status in statuses)
             {

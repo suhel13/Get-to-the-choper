@@ -89,7 +89,7 @@ public abstract class Gun : Weppon
         relodeTimer -= delthaTime;
         relodeSlider.value = relodeTimer / relodeTime;
         Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
-        animator.speed = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / relodeTime;
+        animator.SetFloat("RelodeSpeed", animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / relodeTime);
 
         if (isReloding && relodeTimer <= 0)
         {
