@@ -5,15 +5,16 @@ using UnityEngine.UI;
 
 public abstract class Gun : Weppon
 {
+    [Header("Magazine", order = 2)]
     [SerializeField] protected float baseRelodeTime;
     protected float relodeTime;
     protected float relodeTimer;
     protected bool isReloding;
 
     [HideInInspector] public Slider relodeSlider;
-
     [SerializeField] protected int magSize;
     public int mag;
+    [Header("Bullets ", order = 20)]
     [SerializeField] protected float bulletLifeTime;
     [SerializeField] protected float baseBulletSpeed;
     protected float bulletSpeed;
@@ -25,7 +26,11 @@ public abstract class Gun : Weppon
     protected GameObject tempBulletGO;
     [SerializeField] protected Transform bulletSpawnPoint;
 
-    public TMPro.TextMeshProUGUI ammoCounterText;
+    [Header("Camera Shake")]
+    [SerializeField] float shakeIntecity;
+    [SerializeField] float shakeDuration;
+
+    [HideInInspector] public TMPro.TextMeshProUGUI ammoCounterText;
 
     protected void PlayerUpgrades_RelodeUpgraded() { relodeTime = baseRelodeTime / (1 + GameManager.Instance.playerUpgrades.relodeSpeedBonus); }
     protected void PlayerUpgrades_BulletSpeedUpgraded() { bulletSpeed = baseBulletSpeed * (1 + GameManager.Instance.playerUpgrades.bulletSpeedBonus); }
@@ -57,6 +62,7 @@ public abstract class Gun : Weppon
                 SpawnBullets(damage, bulletSpeed);
                 UpdateGunIconInfo();
                 UpdateAmmoCounterText();
+                ShakeManager.Instance.CameraShake(shakeIntecity, shakeDuration);
             }
             else return;
         }
@@ -88,7 +94,7 @@ public abstract class Gun : Weppon
 
         relodeTimer -= delthaTime;
         relodeSlider.value = relodeTimer / relodeTime;
-        Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
+        //Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
         animator.SetFloat("RelodeSpeed", animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / relodeTime);
 
         if (isReloding && relodeTimer <= 0)

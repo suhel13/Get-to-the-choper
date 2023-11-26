@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
         string testString;
         var watch = new System.Diagnostics.Stopwatch();
         watch.Start();
-        for (int i = 0; i < 1000000; i++)
+        for (int i = 0; i < 1000; i++)
         {
             testString = testflaot.ToString();
         }
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
 
         var watch2 = new System.Diagnostics.Stopwatch();
         watch2.Start();
-        for (int i = 0; i < 1000000; i++)
+        for (int i = 0; i < 1000; i++)
         {
             testString = "" + testflaot;
         }

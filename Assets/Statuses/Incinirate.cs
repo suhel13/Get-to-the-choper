@@ -38,7 +38,7 @@ public class Incinirate : Status
 
     public override void tickEfect(HealthStatusManager HSman)
     {
-        HSman.takeDamage(damage);
+        HSman.TakeDamage(damage);
     }
     public override bool resolveCombinations(HealthStatusManager HSman, Dictionary<int, Status> targetStatuses)
     {
@@ -53,7 +53,7 @@ public class Incinirate : Status
             if (entry.Value.name == statusName.Bleed)
             {
                 statusesToRemove.Add(entry.Key);
-                HSman.takeDamage(bleedDamage);
+                HSman.TakeDamage(bleedDamage);
                 break;
             }
             if(entry.Value.name == statusName.Cold)
@@ -83,7 +83,7 @@ public class Incinirate : Status
         }
         foreach (int id in statusesToRemove)
         {
-            HSman.removeStatus(id);
+            HSman.RemoveStatus(id);
         }
         return returnVal;
     }

@@ -7,6 +7,7 @@ public class Push : Status
     Vector2 dir;
     float maxSpeed;
     float minSpeed;
+    [HideInInspector] public Vector2 actualSpeed;
     public float pushFallOff;
 
     public Push(Push push, bool newID) : base(push, newID)
@@ -34,9 +35,19 @@ public class Push : Status
         pushFallOff = pushSO.pushFallOff;
         name = statusName.Push;
     }
+    public Push(Vector2 dir, float maxSpeed, float minSpeed, float pushFallOff, float duration, float tick):base (duration, tick)
+    {
+        this.dir = dir;
+        this.maxSpeed = maxSpeed;
+        this.minSpeed = minSpeed;
+        this.pushFallOff = pushFallOff;
+        name = statusName.Push;
+
+    }
     
     public override void resolvePhysicsEfects(HealthStatusManager HSman)
     {
-        HSman.GetComponent<Character2dTopDownControler>().enviromentSpeedVector.Add(this.dir.normalized * ((maxSpeed - minSpeed) * (1 - timer / duration) + minSpeed));
+        actualSpeed = this.dir.normalized * ((maxSpeed - minSpeed) * (1 - timer / duration) + minSpeed);
+        HSman.GetComponent<Character2dTopDownControler>().enviromentSpeedVector.Add(actualSpeed);
     }
 }

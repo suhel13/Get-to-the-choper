@@ -71,7 +71,7 @@ public class Cold : Status
         }
         foreach (int id in statusesToRemove)
         {
-            HSman.removeStatus(id);
+            HSman.RemoveStatus(id);
         }
         statusesToRemove.Clear();
         return returnVal;

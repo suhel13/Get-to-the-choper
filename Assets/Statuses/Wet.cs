@@ -57,7 +57,7 @@ public class Wet : Status
         }
         foreach (int id in statusesToRemove)
         {
-            HSman.removeStatus(id);
+            HSman.RemoveStatus(id);
         }
         return returnVal;
     }

@@ -65,7 +65,7 @@ public abstract class Status
     public bool resolveStatus(float deltaTime, HealthStatusManager HSman)
     {
         normalEffect(HSman);
-
+        Debug.Log("Status " + name + " timer: " + timer + " / " + duration);
         timer += deltaTime;
         if (timer > duration)
         {

@@ -22,6 +22,8 @@ public class BaseStatuses : MonoBehaviour
     [SerializeField] SmokeSO smokeSO;
     [SerializeField] WetSO wetSO;
 
+    public LayerMask pushCollision;
+
     private void Start()
     {
         acid = new Acid(acidSO);

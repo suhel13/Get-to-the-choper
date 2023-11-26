@@ -115,11 +115,15 @@ public class Character2dTopDownControler : MonoBehaviour
             rb2D.velocity = Vector2.zero;
         }
         canMove = true;
+        Debug.Log("base velocity: " + rb2D.velocity, gameObject);
+        Debug.Log("push effects: " + enviromentSpeedVector.Count);
 
         foreach(Vector2 evnSpeed in enviromentSpeedVector) 
         {
             rb2D.velocity += evnSpeed;
         }
-       enviromentSpeedVector.Clear();
+
+        enviromentSpeedVector.Clear();
+        Debug.Log(rb2D.velocity, gameObject);
     }
 }

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class HealthStatusManager : MonoBehaviour, IPushAble, IDamageAble
 {
@@ -11,6 +13,10 @@ public class HealthStatusManager : MonoBehaviour, IPushAble, IDamageAble
     
     public Dictionary<int, Status> Statuses = new Dictionary<int, Status>();
     List<int> statusesToRemove = new List<int>();
+
+    public List<Push> pushes = new List<Push>();
+    List<int> pushesToRemove = new List<int>();
+
     PersonalUIControler personalUIControler;
     public int xpAmount;
     DamageNumberCanvasControler damageNumberCanvasControler;
@@ -48,16 +54,28 @@ public class HealthStatusManager : MonoBehaviour, IPushAble, IDamageAble
             }
             else
             {
-                if (entry.Value is Push == false)
-                    Statuses[entry.Key].statusIconUpdate();
+                Statuses[entry.Key].statusIconUpdate();
             }
         }
         foreach (int key in statusesToRemove)
         {
-            removeStatus(key);
+            RemoveStatus(key);
         }
-
         statusesToRemove.Clear();
+
+        foreach (Push push in pushes)
+        {
+            push.startEfect(this);
+            if (push.resolveStatus(Time.deltaTime, this))
+            {
+                pushesToRemove.Add(pushes.IndexOf(push));
+            }
+        }
+        foreach (int key in pushesToRemove)
+        {
+            RemovePush(key);
+        }
+        pushesToRemove.Clear();
 
         personalUIControler.updateHpSlider(Hp / maxHp);
     }
@@ -68,10 +86,14 @@ public class HealthStatusManager : MonoBehaviour, IPushAble, IDamageAble
         {
             entry.Value.resolvePhysicsEfects(this);
         }
+        foreach (Push push in pushes)
+        {
+            push.resolvePhysicsEfects(this);
+        }
     }
 
 
-    public bool takeDamage(float amount)
+    public bool TakeDamage(float amount)
     {
         Hp -= amount;
 
@@ -85,19 +107,22 @@ public class HealthStatusManager : MonoBehaviour, IPushAble, IDamageAble
         }
         else return true;
     }
-    public void removeStatus(int id)
+    public void RemoveStatus(int id)
     {
-        if (Statuses[id] is Push == false)
-        {
+
             Destroy(Statuses[id].statusIcon.gameObject);
             personalUIControler.statusIcons.Remove(Statuses[id].statusIcon);
             personalUIControler.updateStatusIconPositions();
-        }
-        Statuses.Remove(id);
+    }
+    public void RemovePush(int id)
+    {
+        pushes.RemoveAt(id);
     }
 
     public void addStatus(Status status)
     {
+        if (status is Push)
+            return;
         if (status.resolveCombinations(this, Statuses))
         {
             if (Statuses.ContainsKey(status.id))
@@ -118,14 +143,24 @@ public class HealthStatusManager : MonoBehaviour, IPushAble, IDamageAble
     {
         push.resolveCombinations(this, Statuses);
         push.setDir(dir);
-        if (Statuses.ContainsKey(push.id))
+        pushes.Add(push);
+    }
+    bool HasStatus(Status.statusName statusName)
+    {
+        foreach (KeyValuePair<int, Status> entry in Statuses)
         {
-            Statuses[push.id].resetStatus(push);
+            if (entry.Value.name == statusName)
+                return true;
         }
-        else
         {
-            Statuses.Add(push.id, push);
+            if (entry.Value.name == statusName)
+            {
+                key = entry.Key;
+                return true;
+            }
         }
+        key = -1;
+        return false;
     }
 
     void death()
@@ -135,5 +170,35 @@ public class HealthStatusManager : MonoBehaviour, IPushAble, IDamageAble
             GameManager.Instance.spawnManager.spawnXp(xpAmount, transform.position);
         }
         Destroy(this.gameObject);
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (GameManager.Instance.baseStatuses.pushCollision.value == (GameManager.Instance.baseStatuses.pushCollision.value|( 1 << collision.gameObject.layer) ) )
+        { 
+            Vector2 pushForce = Vector2.zero;
+            foreach (Push push in pushes)
+            {
+                pushForce += push.actualSpeed;
+            }
+
+            Debug.Log(pushForce, gameObject);
+            if (pushForce.magnitude < 0.2f)
+                return;
+
+            float collisionDamageMultiplayer = 1;
+
+            if (HasStatus(Status.statusName.Frozen))
+                collisionDamageMultiplayer *= 2;
+
+            int tempShockKey;
+            HealthStatusManager collisionTargetHSMan;
+            
+            if (HasStatus(Status.statusName.Shock, out tempShockKey))
+                if (collision.gameObject.TryGetComponent(out collisionTargetHSMan))
+                    collisionTargetHSMan.addStatus(Statuses[tempShockKey]);
+
+            TakeDamage(pushForce.magnitude * collisionDamageMultiplayer);
+            Debug.Log("Collission damage: " + (pushForce.magnitude * collisionDamageMultiplayer).ToString(), gameObject);
+        }
     }
 }

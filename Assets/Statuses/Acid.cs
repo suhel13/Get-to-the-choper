@@ -40,7 +40,7 @@ public class Acid : Status
     }
     public override void tickEfect(HealthStatusManager HSman)
     {
-        HSman.takeDamage(damage);
+        HSman.TakeDamage(damage);
     }
     public override bool resolveCombinations(HealthStatusManager HSman, Dictionary<int, Status> targetStatuses)
     {
@@ -66,7 +66,7 @@ public class Acid : Status
         }
         foreach (int id in statusesToRemove)
         {
-            HSman.removeStatus(id);
+            HSman.RemoveStatus(id);
         }
         statusesToRemove.Clear();
         return returnVal;

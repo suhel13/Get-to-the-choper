@@ -16,6 +16,6 @@ MonoBehaviour:
   duration: 0.3
   tick: 0.3
   dir: {x: 0, y: 0}
-  maxSpeed: 4
+  maxSpeed: 5
   minSpeed: 2
   pushFallOff: 0

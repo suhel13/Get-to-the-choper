@@ -11,7 +11,7 @@ public class MeleWeppno : Weppon
         if(collision.TryGetComponent(out  HSman))
         {
             Debug.Log("mele damage triger");
-            HSman.takeDamage(baseDamage);
+            HSman.TakeDamage(baseDamage);
         }
     }
 }

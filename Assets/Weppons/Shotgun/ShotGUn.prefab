@@ -339,6 +339,8 @@ MonoBehaviour:
   basePierce: 0
   bulletPrefab: {fileID: 3375962933119144305, guid: 8cc13885c1f2b4146b111253ea51ace2, type: 3}
   bulletSpawnPoint: {fileID: 7619981640829273407}
+  shakeIntecity: 2
+  shakeDuration: 0.1
   ammoCounterText: {fileID: 0}
   pelletsdAngle: 45
   velocityVariation: 0.1

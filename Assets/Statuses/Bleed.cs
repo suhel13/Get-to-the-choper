@@ -34,7 +34,7 @@ public class Bleed : Status
     }
     public override void tickEfect(HealthStatusManager HSman)
     {
-        HSman.takeDamage(damage);
+        HSman.TakeDamage(damage);
     }
 
 }

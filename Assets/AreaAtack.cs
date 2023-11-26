@@ -27,7 +27,7 @@ public class AreaAtack : MonoBehaviour, IOnHitEfect
         {
             if (item.TryGetComponent(out tempHSMan))
             {
-                if (tempHSMan.takeDamage(damage) == false)
+                if (tempHSMan.TakeDamage(damage) == false)
                     continue; //skip adding statuses if target is dead
 
                 foreach (Status status in statuses)

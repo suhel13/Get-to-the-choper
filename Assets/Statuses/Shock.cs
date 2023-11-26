@@ -96,7 +96,7 @@ public class Shock : Status
     }
     public override void tickEfect(HealthStatusManager HSman)
     {
-        HSman.takeDamage(damage);
+        HSman.TakeDamage(damage);
     }
     public override bool resolveCombinations(HealthStatusManager HSman, Dictionary<int, Status> targetStatuses)
     {

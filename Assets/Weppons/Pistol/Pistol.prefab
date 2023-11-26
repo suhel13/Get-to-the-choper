@@ -99,11 +99,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 271151c2169b9ab43b842ede66072db5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseDamage: 1
+  baseDamage: 3
   baseFireRate: 2
   stopedShooting: 0
-  statusesSO:
-  - {fileID: 11400000, guid: c37a74c583df05746948bf9e8d005e4f, type: 2}
+  statusesSO: []
+  maxPushSpeed: 0.5
+  minPushSpeed: 0.2
+  pushDuration: 0.3
   iconControler: {fileID: 0}
   animator: {fileID: 0}
   baseRelodeTime: 1
@@ -117,6 +119,8 @@ MonoBehaviour:
   basePierce: 0
   bulletPrefab: {fileID: 3375962933119144305, guid: 49779f312be8b584bb13e90038368ab4, type: 3}
   bulletSpawnPoint: {fileID: 3316574838792301261}
+  shakeIntecity: 1
+  shakeDuration: 0.2
   ammoCounterText: {fileID: 0}
 --- !u!95 &1866990875
 Animator:

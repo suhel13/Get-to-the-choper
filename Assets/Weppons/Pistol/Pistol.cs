@@ -13,5 +13,6 @@ public class Pistol : Gun
         {
             tempBulletGO.GetComponent<Bullet>().addStatus(status.copy());
         }
+        tempBulletGO.GetComponent<Bullet>().addStatus(basePush);
     }
 }

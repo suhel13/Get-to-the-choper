@@ -15,6 +15,11 @@ public class Weppon : MonoBehaviour
 
     [SerializeField] protected List<StatusSO> statusesSO = new List<StatusSO>();
     [SerializeField] protected List<Status> statuses = new List<Status>();
+    [Header("push on hit", order = 10)]
+    [SerializeField] float maxPushSpeed;
+    [SerializeField] float minPushSpeed;
+    [SerializeField] float pushDuration;
+    [HideInInspector] public Push basePush;
 
     [HideInInspector] public WepponIconControler iconControler;
     [HideInInspector] public Animator animator;
@@ -31,6 +36,8 @@ public class Weppon : MonoBehaviour
             Debug.Log(statSO.name);
             statuses.Add(statSO.createObject());
         }
+        basePush = new Push(Vector2.zero, maxPushSpeed, minPushSpeed, 0, pushDuration, pushDuration);
+
         animator = GetComponent<Animator>();
         damage = baseDamage * (1 + GameManager.Instance.playerUpgrades.wepponDamageBonus);
         fireRate = baseFireRate * (1 + GameManager.Instance.playerUpgrades.fireRateBonus);
@@ -38,6 +45,7 @@ public class Weppon : MonoBehaviour
     }
 
     public virtual void Attack() { Attack(Vector2.zero); }
+
     public virtual void Attack(Vector2 targetPos)
     {
         if (fireRateTimer <= 0)

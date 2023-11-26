@@ -40,14 +40,14 @@ public class Bullet : MonoBehaviour
         HealthStatusManager target;
         if (collision.gameObject.TryGetComponent<HealthStatusManager>(out target))
         {
-            if (target.takeDamage(damage) == false && pierceOnKill)
+            if (target.TakeDamage(damage) == false && pierceOnKill)
                 pierce += 1;
 
             foreach (Status status in statuses)
             {
                 if (status is Push)
                 {
-                    target.addPush(status as Push, (target.transform.position - owner.transform.position).normalized);
+                    target.addPush(status.copy() as Push, (target.transform.position - owner.transform.position).normalized);
                 }
                 else
                     target.addStatus(status.copy());
