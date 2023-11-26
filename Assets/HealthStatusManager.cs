@@ -152,6 +152,11 @@ public class HealthStatusManager : MonoBehaviour, IPushAble, IDamageAble
             if (entry.Value.name == statusName)
                 return true;
         }
+        return false;
+    }
+    bool HasStatus(Status.statusName statusName, out int key)
+    {
+        foreach (KeyValuePair<int, Status> entry in Statuses)
         {
             if (entry.Value.name == statusName)
             {
